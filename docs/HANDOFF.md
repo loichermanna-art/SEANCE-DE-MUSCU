@@ -2,6 +2,14 @@
 
 Ce journal conserve les informations utiles au prochain contributeur. Ajouter les entrées les plus récentes en haut. Ne pas y copier de secrets, clés API ou données personnelles.
 
+### 2026-10-18 — Organisation des rôles — validée par l'utilisateur
+
+- **Chef d'orchestre :** l'utilisateur attribue les tâches, valide les spécifications et décide des étapes.
+- **Assistant conception/audit :** fournit parcours, fonctionnement, design et prompts avant implémentation ; après implémentation, inspecte le diff, exécute indépendamment `npm test` et `npm run build`, réalise l'audit et consigne les résultats/constats classés dans ce journal. Il ne modifie pas silencieusement le code de l'implémenteur.
+- **Assistant implémentation/finition :** réalise le code selon la spécification approuvée, ajoute les tests utiles, peaufine l'interface, exécute ses propres vérifications et corrige les problèmes retenus après audit.
+- **Clôture :** pas de tâche de développement déclarée terminée avant l'audit indépendant, la résolution des problèmes bloquants/majeurs, la consignation des résultats et l'accord de l'utilisateur.
+- **Détails et prompts copiables :** [`00-coordination.md`](00-coordination.md), section « Rôles et contrôle qualité ».
+
 ### 2026-10-18 — P3-01 — Assistant ChatGPT
 
 - **État :** Terminé

@@ -1,3 +1,14 @@
+### 2026-10-18 — UI-01 — Assistant ChatGPT (mandat explicite)
+
+- **État :** En cours — première passe du système visuel intégrée ; audit indépendant et tests à réaliser.
+- **Résumé :** passage du thème sombre au thème clair premium demandé par l'utilisateur. Palette centralisée, fond gris très léger, surfaces blanches, accent bleu, hiérarchie typographique et focus visible ; navigation mobile/desktop harmonisée sans retirer de routes ni changer le comportement des données.
+- **Branche :** `arena/aa006b12-seance-de-muscu`.
+- **Commit de référence au début de la passe :** branche de travail existante ; aucun changement sur `main`.
+- **Fichiers modifiés :** `src/styles/index.css`, `src/components/ui.tsx`, `src/components/Layout.tsx`, `docs/00-coordination.md`.
+- **Décisions :** garder React/Tailwind et les composants existants ; pas de réécriture des pages ni de données fictives ; réduire transparence/flou de la navigation ; respecter `prefers-reduced-motion) et ajouter un style de focus visible.
+- **Vérifications :** fichiers relus depuis la branche après mise à jour. `npm test), `npm run build), et vérification visuelle navigateur mobile/desktop **non exécutés** dans cette passe faute d'environnement d'exécution du projet connecté à GitHub.
+- **Limites / prochaine étape :** poursuivre les ajustements visuels ciblés après cette fondation, puis réaliser l'audit indépendant (diff, tests, build, responsive et interactions) avant de déclarer la tâche terminée.
+
 # GYM OS — Journal de passation
 
 Ce journal conserve les informations utiles au prochain contributeur. Ajouter les entrées les plus récentes en haut. Ne pas y copier de secrets, clés API ou données personnelles.

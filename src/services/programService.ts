@@ -129,7 +129,7 @@ export const programService = {
   },
 
   async moveDay(id: string, direction: -1 | 1): Promise<void> {
-    await db.transaction('rw', db.programDays, async () => {
+    await db.transaction('rw', db.programDays, db.programs, async () => {
       const day = await db.programDays.get(id)
       if (!day) throw new ProgramServiceError('Ce jour est introuvable. Actualise le programme.', 'NOT_FOUND')
       const program = await db.programs.get(day.programId)

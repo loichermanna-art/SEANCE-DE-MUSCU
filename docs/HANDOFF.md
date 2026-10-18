@@ -2,6 +2,16 @@
 
 Ce journal conserve les informations utiles au prochain contributeur. Ajouter les entrées les plus récentes en haut. Ne pas y copier de secrets, clés API ou données personnelles.
 
+### 2026-10-18 — Synchronisation inter-assistants
+
+- **Règle commune :** GitHub est la source de vérité ; les conversations privées ne sont pas automatiquement partagées entre assistants.
+- **Protocole ajouté :** `docs/00-coordination.md`, section « Protocole de synchronisation entre assistants ».
+- **Référence du commit :** `ced42e6c1d4749350ae073332c16e0cb438f2939` — ajout du protocole sur `arena/aa006b12-seance-de-muscu`.
+- **Avant chaque intervention :** relire le guide, ce journal, l'état des tâches et le SHA de branche courant.
+- **Passation obligatoire :** consigner tâche, responsable, branche/SHA, fichiers, décisions, tests exacts, problèmes ouverts et prochaine action.
+- **Limite pratique :** l'utilisateur reste le relais des informations qui doivent passer d'un chat à l'autre. Fournir un message court et les liens GitHub dans chaque passation.
+- **Prochaine étape :** attendre l'attribution de P3-02 ; l'assistant conception/audit prépare d'abord une spécification, sans toucher au code fonctionnel, puis l'utilisateur la valide avant implémentation.
+
 ### 2026-10-18 — Organisation des rôles — validée par l'utilisateur
 
 - **Chef d'orchestre :** l'utilisateur attribue les tâches, valide les spécifications et décide des étapes.

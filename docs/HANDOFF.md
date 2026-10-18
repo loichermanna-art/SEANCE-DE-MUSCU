@@ -1,3 +1,10 @@
+### 2026-10-18 — Déploiement Vercel de l'aperçu UI-01
+
+- **État :** Déploiement Preview prêt (READY), issu de la branche `arena/aa006b12-seance-de-muscu`, commit `5d822d9`.
+- **URL d'aperçu :** https://gym-qrjiiaq9h-loichermanna-8394s-projects.vercel.app
+- **Cible :** Preview Vercel, pas Production. La production n'a pas été modifiée ; l'audit UI-01 reste incomplet et attend les vérifications navigateur indépendantes.
+- **Prochaine action :** vérifier sur cette URL le rendu desktop/mobile, `prefers-reduced-motion` et le parcours clavier ; après audit validé, décider avec l'utilisateur si une promotion en production est souhaitée.
+
 ### 2026-10-18 — Audit indépendant UI-01 / commit 3b4cb57
 
 - **État :** Audit partiel — non validé faute d'exécution des tests et de vérification navigateur. Aucun code applicatif modifié pendant cet audit.

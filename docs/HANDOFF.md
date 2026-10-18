@@ -1,3 +1,23 @@
+### 2026-10-18 — P3-02 — Première implémentation — Assistant ChatGPT
+
+- **État :** Première passe déposée sur la branche ; vérifications de compilation/tests à effectuer avant l'audit indépendant. Ne pas clôturer P3-02 à ce stade.
+- **Branche :** `arena/aa006b12-seance-de-muscu`. Aucun changement sur `main`.
+- **Spécification :** `docs/P3-02-specification-programmes-jours.md` (validée explicitement par l'utilisateur avant le démarrage).
+- **Fichiers applicatifs ajoutés/modifiés :**
+  - `src/services/programService.ts` — accès Dexie, validations, CRUD programme/jour, statut, transaction de réordonnancement, protections contre suppression référencée par l'historique.
+  - `src/services/programService.test.ts` — tests unitaires des validations des champs programme/jour.
+  - `src/features/ProgramsPage.tsx` — interface liste/détail, filtres de statut, formulaires responsives, gestion des jours, confirmations, retours d'erreur/succès.
+  - `src/features/PlaceholderPages.tsx` — branche la nouvelle page sur la route Programmes existante.
+- **Documentation :** `docs/00-coordination.md` met P3-02 « En cours » avec responsable ChatGPT ; ce journal conserve les décisions et la limite de périmètre.
+- **Règles implémentées :** nom programme 80 caractères, objectif 240, nom jour 60, note 500 ; trim des champs obligatoires ; jour de semaine 1–7 ; programme archivé en lecture seule et restauration en pause ; réordonnancement par boutons accessibles ; suppressions transactionnelles et refus si des séances référencent le programme/jour.
+- **P3-03 hors périmètre :** aucune UI d'ajout/modification/réorganisation d'exercices planifiés.
+- **Protection de l'historique :** les tables de séances/séries ne sont jamais supprimées par ces opérations. La suppression d'un programme est refusée si une séance référence le programme ou l'un de ses jours ; suppression d'un jour refusée si une séance le référence.
+- **Vérifications :** non exécutées dans cet environnement — je n'ai pas de checkout local exploitable pour installer les dépendances et lancer `npm test` / `npm run build`. Les tests ajoutés ne sont donc pas déclarés réussis. Audit statique du code via fichiers GitHub uniquement ; aucune validation navigateur réelle.
+- **Limites ouvertes avant clôture :** lancer `npm ci`, `npm test` et `npm run build` dans un environnement avec accès au dépôt ; corriger les éventuels échecs TypeScript/tests ; tester la création/édition/suppression/réordonnancement avec IndexedDB, protection de l'historique, clavier et responsive mobile/desktop. Vérifier également la fermeture/focus des dialogues et les erreurs de stockage.
+- **Prochaine action / destinataire :** demander une vérification indépendante et transmettre les constats à l'utilisateur. P3-02 reste « En cours » jusqu'à tests, audit, corrections éventuelles et approbation utilisateur.
+
+---
+
 ### 2026-10-18 — P3-02 — Implémentation programmes et jours — Assistant ChatGPT
 
 - **État :** En cours — mandat explicite de l'utilisateur reçu après dépôt de la spécification.

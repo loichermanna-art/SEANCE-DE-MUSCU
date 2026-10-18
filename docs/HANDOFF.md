@@ -1,3 +1,22 @@
+### 2026-10-18 — Audit indépendant UI-01 / commit 3b4cb57
+
+- **État :** Audit partiel — non validé faute d'exécution des tests et de vérification navigateur. Aucun code applicatif modifié pendant cet audit.
+- **Branche cible :** `arena/aa006b12-seance-de-muscu`.
+- **Commit examiné :** [`3b4cb577c6fac763dd23b04b1939449eac1b7127`](https://github.com/loichermanna-art/SEANCE-DE-MUSCU/commit/3b4cb577c6fac763dd23b04b1939449eac1b7127).
+- **Périmètre statiquement inspecté :** diff du commit, `src/styles/index.css`, `src/components/Layout.tsx`, `src/components/ui.tsx`, `src/features/DashboardPage.tsx`, `src/features/ExercisesPage.tsx`, `src/features/ProfilePage.tsx`, `package.json`.
+- **Rendu ordinateur/mobile :** non vérifiable visuellement dans l'environnement disponible. Le code prévoit une sidebar à partir de `sm` (640 px) et une navigation inférieure sur mobile ; les marqueurs d'itinéraire sont différenciés verticalement/ horizontalement. Il reste à vérifier dans un vrai navigateur le débordement, le chevauchement avec le contenu, la lisibilité et la navigation inférieure sur petit écran.
+- **`prefers-reduced-motion` :** inspection statique favorable : les animations de titre/liste/panneau sont désactivées, les transformations hover/active annulées et la durée des transitions/animations ramenée à `0.01ms`. Le comportement réel avec l'émulation système n'a pas pu être testé.
+- **Navigation clavier :** inspection statique favorable mais incomplète : `NavLink` produit des liens natifs et la feuille de style définit un indicateur `:focus-visible` global. Les champs qui utilisent `outline-none` reposent sur une bordure de focus ; il faut vérifier le parcours Tab/Shift+Tab réel et que le focus reste visible sur tous les fonds, y compris la barre mobile fixe. Aucun test interactif n'a été exécuté.
+- **Constats mineurs :**
+  1. `src/styles/index.css` définit `--motion-ease-in-out` et `--motion-d3`, qui ne sont pas utilisés dans le code inspecté. Nettoyage facultatif, sans impact fonctionnel apparent.
+  2. Dans `src/features/ExercisesPage.tsx`, `filtersUsed` reste vrai après le premier changement de filtre. La classe `gym-list-item-enter` ne redémarre donc pas nécessairement l'animation pour les résultats déjà montés lors des changements de filtres suivants. Impact limité à la micro-interaction ; à ajuster seulement si l'animation à chaque filtrage est un critère attendu.
+- **Bloquant/majeur confirmé par inspection statique :** aucun identifié dans le périmètre limité examiné. Cela ne vaut pas validation de l'interface complète.
+- **Tentative d'exécution :** `git clone --branch arena/aa006b12-seance-de-muscu --depth 50 https://github.com/loichermanna-art/SEANCE-DE-MUSCU.git /tmp/gym-os-audit` — **échec avant clonage**, car l'environnement ne peut pas résoudre `github.com` (`Could not resolve host: github.com`). `node --version` → `v22.16.0`; `npm --version` → `10.9.2`.
+- **`npm test` : NON EXÉCUTÉ.** Aucun checkout local du dépôt et aucune dépendance installée ; ne pas reprendre les résultats consignés par l'implémenteur comme preuve d'un test indépendant.
+- **`npm run build` : NON EXÉCUTÉ** pour la même raison.
+- **Résultat d'audit :** **incomplet / validation suspendue**, pas un échec démontré du code. Aucun fichier de code n'a été modifié. Pour conclure, relancer `npm ci`, `npm test` et `npm run build` dans un environnement ayant accès au dépôt et aux dépendances, puis vérifier manuellement les formats desktop/mobile, le mode mouvement réduit et le parcours clavier.
+- **Prochaine action :** reprendre l'audit dès qu'un environnement local ou CI accessible permet les commandes et essais visuels ; résoudre les constats éventuels avant de clore UI-01.
+
 ### 2026-10-18 — UI-01 — Assistant ChatGPT (mandat explicite)
 
 - **État :** En cours — thème clair et première passe motion intégrés ; audit indépendant et contrôle visuel responsive restent à faire.

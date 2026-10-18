@@ -66,6 +66,18 @@ Une tâche n'est **Terminé** qu'après : (1) implémentation et tests préalabl
 5. Consigner les passations et résultats d'audit dans `docs/HANDOFF.md`. Pour des changements parallèles, utiliser des branches/PR distinctes et examiner les changements avant intégration.
 6. En cas de désaccord avec le cahier des charges ou la roadmap, documenter la question et demander à l'utilisateur avant toute décision structurante.
 
+## Protocole de synchronisation entre assistants
+
+GitHub est la source de vérité partagée ; les conversations privées des assistants ne sont pas automatiquement accessibles l'une à l'autre.
+
+1. **Avant chaque intervention**, chaque assistant relit ce guide, les dernières entrées de `docs/HANDOFF.md`, l'état des tâches et le commit courant de la branche. Il ne se fie pas uniquement à un résumé transmis dans le chat.
+2. **Une tâche = un responsable actif.** L'assistant conception/audit ne modifie pas le code fonctionnel ; l'assistant implémentation ne clôture pas lui-même l'audit indépendant.
+3. **Chaque passation** dans `docs/HANDOFF.md` doit indiquer : tâche/phase, responsable, branche, SHA du commit de référence, fichiers modifiés, décisions prises, tests exécutés avec résultats exacts, problèmes ouverts et action suivante.
+4. **Chaque message de passation à l'utilisateur** doit contenir le lien vers le commit ou les fichiers concernés et un court texte prêt à transmettre à l'autre assistant si nécessaire. L'utilisateur reste le relais entre les chats lorsque le contexte n'est pas partagé automatiquement.
+5. Avant de modifier un document, vérifier sa version la plus récente sur la branche ; éviter les mises à jour concurrentes et ne jamais remplacer le travail récent d'un autre contributeur par une copie obsolète.
+6. Si le statut, la spécification, le SHA de référence ou le responsable sont ambigus, suspendre le travail concerné et demander une clarification plutôt que deviner.
+7. Ne jamais déclarer une commande réussie si elle n'a pas été exécutée dans un environnement approprié. Distinguer clairement « réussi », « échoué », « non exécuté » et « impossible dans l'environnement disponible ».
+
 ## Messages à envoyer à un assistant
 
 **Pour la conception :**

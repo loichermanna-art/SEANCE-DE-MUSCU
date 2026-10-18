@@ -23,7 +23,7 @@ Les tâches marquées « À attribuer » ne sont prises par aucun assistant tant
 
 | ID | Tâche | État | Responsable | Dépend de |
 |---|---|---|---|---|
-| P3-01 | Examiner l'existant lié aux programmes et proposer un découpage précis, sans modifier le code fonctionnel | À faire | À attribuer | — |
+| P3-01 | Examiner l'existant lié aux programmes et proposer un découpage précis, sans modifier le code fonctionnel | Terminé | Assistant ChatGPT | — |
 | P3-02 | Implémenter la création, modification et suppression des programmes et de leurs jours | À faire | À attribuer | P3-01 |
 | P3-03 | Permettre d'ajouter/réordonner des exercices dans les jours, avec séries, répétitions, charge cible et repos | À faire | À attribuer | P3-02 |
 | P3-04 | Relier l'interface de programme aux vraies données locales, gérer les états vide/erreur/succès et ajouter des tests | À faire | À attribuer | P3-02, P3-03 |

@@ -27,6 +27,8 @@ Pour brancher Supabase et déployer sur Vercel : [`docs/06-supabase-vercel.md`](
 
 ## Documentation
 
+Pour répartir le travail entre contributeurs et assistants, commencer par [`docs/00-coordination.md`](docs/00-coordination.md) et consigner les passations dans [`docs/HANDOFF.md`](docs/HANDOFF.md).
+
 | Document | Contenu |
 |---|---|
 | [`docs/01-analyse-cahier-des-charges.md`](docs/01-analyse-cahier-des-charges.md) | Compréhension du besoin, dépendances, risques |

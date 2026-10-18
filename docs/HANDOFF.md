@@ -1,3 +1,14 @@
+### 2026-10-18 — P3-02 — Implémentation programmes et jours — Assistant ChatGPT
+
+- **État :** En cours — mandat explicite de l'utilisateur reçu après dépôt de la spécification.
+- **Branche :** `arena/aa006b12-seance-de-muscu` ; `main` ne doit pas être modifiée.
+- **Spécification approuvée pour implémentation :** `docs/P3-02-specification-programmes-jours.md`.
+- **Périmètre :** CRUD des programmes et des jours, réordonnancement, statuts actif/pause/archive, états UI, validations, protection de l'historique, tests. P3-03 (gestion des exercices planifiés) reste hors périmètre.
+- **Prochaine action :** implémenter en réutilisant React/TypeScript/Tailwind/Dexie et le modèle existant ; exécuter `npm test` et `npm run build` si l'environnement le permet ; noter les résultats exacts et tout blocage. Audit indépendant requis avant clôture.
+- **Vérifications au démarrage :** lecture de `docs/00-coordination.md`, `docs/HANDOFF.md`, spécification P3-02, types et services DB. Aucune modification de code encore inscrite dans cette entrée au moment de sa création.
+
+---
+
 ### 2026-10-18 — P3-02 — Spécification programmes et jours — Assistant ChatGPT
 
 - **État :** Proposition documentaire déposée ; validation utilisateur attendue. L'implémentation P3-02 n'a pas commencé.

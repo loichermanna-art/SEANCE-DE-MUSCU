@@ -7,7 +7,7 @@ par des tests du parcours principal avant de passer à la suivante.
 |---|---|---|---|
 | **1. Cadrage** | Analyse, architecture, modèle de données, règles métier | Ces documents `docs/01` à `05` | ✅ En cours (en attente validation décisions D1–D4) |
 | **2. Socle** | Projet Vite/React/TS, navigation, thème §14.1, IndexedDB (Dexie), PWA de base | App installable, vide mais navigable, données persistées | ✅ Fait (profil + bibliothèque consultable inclus, 16 tests domaine verts) |
-| **3. Bibliothèque & programmes** | Exercices + filtres + exercices perso, création de programmes/jours, séries/reps/repos cibles | Un programme complet créé de zéro | ⬜ |
+| **3. Bibliothèque & programmes** | Exercices + filtres + exercices perso, création de programmes/jours, séries/reps/repos cibles | Un programme complet créé de zéro | ✅ Fait (CRUD programmes/jours/exercices, cibles validées, exercices perso §5.4, 8 tests domaine en plus) |
 | **4. Séance en direct** ⭐ | Démarrage/reprise, saisie des séries pré-remplie, minuteur de repos (robuste en arrière-plan, §7.4), sauvegarde progressive, bilan de fin | Une vraie séance enregistrée du début à la fin | ⬜ |
 | **5. Historique & progression** | Historique des séances, fiche exercice (records, dernières perfs), volume, graphiques Recharts, bilan hebdomadaire | Graphiques alimentés uniquement par les vraies séances | ⬜ |
 | **6. Récupération** | Bilan pré-séance rapide, courbatures par muscle (0–4), règles d'adaptation §9.4 expliquées | Recommandation d'adaptation cohérente et justifiée | ⬜ |

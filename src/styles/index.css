@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+/* GYM OS — Thème (§14.1) : sombre, premium, sportif.
+   Palette centralisée ici : modifiable en un seul endroit. */
+@theme {
+  --color-base: #0b0d12;
+  --color-surface: #151923;
+  --color-surface2: #1d2430;
+  --color-ink: #f4f6fa;
+  --color-muted: #9aa4b2;
+  --color-accent: #5b8cff;
+  --color-accent-ink: #0b0d12;
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+  --color-danger: #f87171;
+  --color-line: #262e3d;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+html {
+  background: var(--color-base);
+}
+
+body {
+  background: var(--color-base);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Chiffres de performance bien lisibles (§14.2) */
+.numeric {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

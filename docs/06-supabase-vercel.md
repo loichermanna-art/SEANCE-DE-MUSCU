@@ -27,9 +27,22 @@ d'opérations idempotentes (§15.4).
 
 1. Va sur [supabase.com](https://supabase.com) → **New project** (nom : `gym-os`).
 2. Choisis un mot de passe de base de données (garde-le pour toi, l'app n'en a pas besoin).
-3. Une fois le projet créé : **SQL Editor** → colle tout le contenu de
-   [`supabase/schema.sql`](../supabase/schema.sql) → **Run**.
-4. **Project Settings → API** : récupère `Project URL` et la clé `anon public`.
+3. **Project Settings → API** : récupère `Project URL` et la clé `anon public`.
+
+## Étape A′ — Connecter Supabase à GitHub (recommandé)
+
+Le schéma est versionné dans `supabase/migrations/` : une fois la connexion
+faite, Supabase applique automatiquement les migrations poussées sur GitHub.
+
+1. Dans ton projet Supabase : **Project Settings → Integrations → GitHub**.
+2. **Connect** → autorise l'application GitHub Supabase sur le dépôt
+   `loichermanna-art/SEANCE-DE-MUSCU`.
+3. Sélectionne ce dépôt, la branche de production et le répertoire de travail
+   `supabase` (détecté automatiquement).
+4. La migration `20261018120000_gym_os_schema_initial.sql` crée toutes les tables.
+
+> Alternative manuelle (sans connexion GitHub) : **SQL Editor** → colle le
+> contenu de [`supabase/schema.sql`](../supabase/schema.sql) → **Run**.
 
 ## Étape B — Brancher les clés
 

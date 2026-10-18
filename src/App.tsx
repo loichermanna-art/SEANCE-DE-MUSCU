@@ -5,7 +5,8 @@ import ExercisesPage from './features/ExercisesPage'
 import ProfilePage from './features/ProfilePage'
 import ProgramsPage from './features/ProgramsPage'
 import ProgramDetailPage from './features/ProgramDetailPage'
-import { ProgressPage, RecoveryPage, WorkoutPage } from './features/PlaceholderPages'
+import WorkoutPage from './features/WorkoutPage'
+import { ProgressPage, RecoveryPage } from './features/PlaceholderPages'
 
 const router = createBrowserRouter([
   {

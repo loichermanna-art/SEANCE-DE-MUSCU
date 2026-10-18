@@ -128,6 +128,12 @@ export interface WorkoutExercise {
   exerciseOrder: number
   status: 'en_cours' | 'termine' | 'ignore' | 'remplace'
   notes?: string
+  /** Cibles copiées au démarrage (snapshot §6.3) : la séance survit aux edits de programme */
+  targetSets?: number
+  minReps?: number
+  maxReps?: number
+  targetLoad?: number
+  restSeconds?: number
 }
 
 export type SetType = 'echauffement' | 'travail'
@@ -189,3 +195,12 @@ export interface UserPreferences {
 
 /** Profil mono-utilisateur local (avant l'authentification, Phase 7) */
 export const LOCAL_USER_ID = 'local-user'
+
+/** État du minuteur de repos, persisté pour survivre au rechargement (§7.4) */
+export interface RestTimerState {
+  id: string // toujours 'active' (un seul minuteur à la fois)
+  endsAt: string // ISO — horodatage absolu : insensible à la suspension de l'onglet
+  durationSeconds: number
+  label?: string
+  createdAt: string
+}

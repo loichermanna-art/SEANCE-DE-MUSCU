@@ -1,7 +1,6 @@
 // GYM OS — Règles métier des programmes (§6, docs/04-regles-metier.md)
 // Fonctions PURES : aucune dépendance React ni base de données.
 
-import type { ProgramExercise } from './types'
 import { validateRestSeconds, type ValidationResult } from './validation'
 
 /** Nom de programme : requis, 2–60 caractères (§19.1). */
@@ -67,11 +66,21 @@ export function formatRestSeconds(seconds: number): string {
   return `${minutes}:${String(secs).padStart(2, '0')}`
 }
 
-/** Résumé lisible des cibles d’un exercice planifié (§6.1). */
-export function describeTargets(pe: Pick<ProgramExercise, 'targetSets' | 'minReps' | 'maxReps' | 'targetLoad' | 'restSeconds'>): string {
-  const reps = pe.minReps === pe.maxReps ? `${pe.minReps}` : `${pe.minReps}–${pe.maxReps}`
+/** Résumé lisible des cibles d’un exercice planifié (§6.1).
+ *  Champs optionnels : la fonction sert aussi pour les snapshots
+ *  de séance (WorkoutExercise), où les cibles sont copiées. */
+export function describeTargets(pe: {
+  targetSets?: number
+  minReps?: number
+  maxReps?: number
+  targetLoad?: number
+  restSeconds?: number
+}): string {
+  const min = pe.minReps ?? 0
+  const max = pe.maxReps ?? 0
+  const reps = min === max ? `${min}` : `${min}–${max}`
   const load = pe.targetLoad !== undefined && pe.targetLoad > 0 ? ` @ ${pe.targetLoad} kg` : ''
-  return `${pe.targetSets} × ${reps} reps${load} · repos ${formatRestSeconds(pe.restSeconds)}`
+  return `${pe.targetSets ?? 0} × ${reps} reps${load} · repos ${formatRestSeconds(pe.restSeconds ?? 0)}`
 }
 
 export const WEEKDAY_LABELS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']

@@ -2,6 +2,7 @@ import { NavLink, Outlet } from 'react-router-dom'
 import { Home, CalendarDays, Dumbbell, TrendingUp, User, HeartPulse, Library, Wifi, WifiOff, Cloud } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { isSupabaseConfigured } from '../lib/supabase'
+import RestTimer from './RestTimer'
 
 const NAV = [
   { to: '/', label: 'Accueil', icon: Home, end: true },
@@ -109,6 +110,9 @@ export default function Layout(): ReactNode {
       <main className="mx-auto w-full max-w-6xl px-4 pb-28 pt-5 sm:pb-10 sm:pl-72 sm:pr-8 sm:pt-8">
         <Outlet />
       </main>
+
+      {/* Minuteur de repos global (§7.4) — visible sur toutes les pages */}
+      <RestTimer />
 
       {/* Navigation inférieure — mobile, accessible au pouce (§14.3) */}
       <nav className="fixed inset-x-0 bottom-0 z-20 flex items-end justify-around border-t border-line bg-surface/95 px-2 pb-[env(safe-area-inset-bottom)] pt-2 backdrop-blur sm:hidden" aria-label="Navigation principale">

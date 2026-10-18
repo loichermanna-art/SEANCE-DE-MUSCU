@@ -121,7 +121,14 @@ create table if not exists public.workout_exercises (
   exercise_name_snapshot text not null, -- historique préservé même si l'exercice est renommé (§6.3)
   exercise_order int not null default 1,
   status text not null default 'en_cours' check (status in ('en_cours','termine','ignore','remplace')),
-  notes text
+  notes text,
+  -- cibles copiées au démarrage de la séance (snapshot §6.3) :
+  -- modifier le programme ne change jamais une séance en cours ou passée
+  target_sets int check (target_sets is null or target_sets > 0),
+  min_reps int check (min_reps is null or min_reps >= 0),
+  max_reps int check (max_reps is null or max_reps >= 0),
+  target_load numeric check (target_load is null or target_load >= 0),
+  rest_seconds int check (rest_seconds is null or rest_seconds between 0 and 3600)
 );
 
 create table if not exists public.workout_sets (
@@ -137,6 +144,15 @@ create table if not exists public.workout_sets (
   status text not null default 'en_saisie' check (status in ('en_saisie','validee')),
   completed_at timestamptz,
   notes text
+);
+
+-- Minuteur de repos persisté (§7.4) : horodatage absolu, un seul minuteur actif.
+create table if not exists public.rest_timers (
+  id text primary key,
+  ends_at timestamptz not null,
+  duration_seconds int not null check (duration_seconds > 0),
+  label text,
+  created_at timestamptz not null default now()
 );
 
 create table if not exists public.recovery_checkins (

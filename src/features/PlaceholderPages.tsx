@@ -1,14 +1,5 @@
-import { Dumbbell, HeartPulse, TrendingUp } from 'lucide-react'
+import { HeartPulse, TrendingUp } from 'lucide-react'
 import { EmptyState, PageTitle, PhaseBadge } from '../components/ui'
-
-export function WorkoutPage() {
-  return (
-    <div>
-      <div className="flex flex-wrap items-center gap-3"><PageTitle title="Séance en direct" subtitle="Le cœur de GYM OS : saisie rapide des séries, minuteur de repos, sauvegarde progressive." /><span className="mb-5 ml-auto"><PhaseBadge phase="Phase 4 — cœur du produit" /></span></div>
-      <EmptyState icon={<Dumbbell size={28} />} title="Le mode séance arrive en Phase 4" message="Après les programmes (Phase 3), tu pourras démarrer une séance, valider chaque série en un geste, lancer le minuteur de repos et reprendre une séance interrompue sans perdre tes données." action={{ label: 'Voir les exercices disponibles', to: '/exercices' }} />
-    </div>
-  )
-}
 
 export function ProgressPage() {
   return (

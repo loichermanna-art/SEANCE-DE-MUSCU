@@ -7,7 +7,7 @@ import Dexie, { type Table } from 'dexie'
 import type {
   Profile, Goal, Exercise, MuscleGroup, ExerciseMuscle, Program, ProgramDay,
   ProgramExercise, WorkoutSession, WorkoutExercise, WorkoutSet, RecoveryCheckin,
-  MuscleSoreness, BodyMeasurement, UserPreferences,
+  MuscleSoreness, BodyMeasurement, UserPreferences, RestTimerState,
 } from '../domain/types'
 
 export class GymOSDatabase extends Dexie {
@@ -26,6 +26,7 @@ export class GymOSDatabase extends Dexie {
   muscleSoreness!: Table<MuscleSoreness, string>
   bodyMeasurements!: Table<BodyMeasurement, string>
   userPreferences!: Table<UserPreferences, string>
+  restTimers!: Table<RestTimerState, string>
 
   constructor() {
     super('gym-os')
@@ -45,6 +46,10 @@ export class GymOSDatabase extends Dexie {
       muscleSoreness: 'id, recoveryCheckinId, muscleGroupId',
       bodyMeasurements: 'id, userId, measurementType, measuredAt',
       userPreferences: 'id, userId',
+    })
+    // v2 : minuteur de repos persisté (§7.4) — survit au rechargement
+    this.version(2).stores({
+      restTimers: 'id',
     })
   }
 }

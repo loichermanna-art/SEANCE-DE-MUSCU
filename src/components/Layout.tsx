@@ -61,11 +61,11 @@ function NavItem({ to, label, icon: Icon, end, primary }: {
       end={end}
       className={({ isActive }) =>
         primary
-          ? `flex flex-col items-center gap-0.5 rounded-2xl px-3 py-1.5 text-[11px] font-bold transition sm:flex-row sm:gap-3 sm:px-4 sm:py-3 sm:text-sm ${
-              isActive ? 'bg-accent text-accent-ink' : 'bg-accent/90 text-accent-ink hover:brightness-110'
+          ? `flex flex-col items-center gap-0.5 rounded-xl px-3 py-1.5 text-[11px] font-bold transition-colors sm:flex-row sm:gap-3 sm:px-4 sm:py-3 sm:text-sm ${
+              isActive ? 'bg-accent text-accent-ink' : 'bg-accent text-accent-ink hover:bg-blue-700'
             }`
-          : `flex flex-col items-center gap-0.5 rounded-xl px-2 py-1.5 text-[11px] font-medium transition sm:flex-row sm:gap-3 sm:px-4 sm:py-3 sm:text-sm ${
-              isActive ? 'bg-surface2 text-ink' : 'text-muted hover:bg-surface2/60 hover:text-ink'
+          : `flex flex-col items-center gap-0.5 rounded-xl px-2 py-1.5 text-[11px] font-medium transition-colors sm:flex-row sm:gap-3 sm:px-4 sm:py-3 sm:text-sm ${
+              isActive ? 'bg-blue-50 text-accent' : 'text-muted hover:bg-surface2 hover:text-ink'
             }`
       }
     >
@@ -79,7 +79,7 @@ export default function Layout(): ReactNode {
   return (
     <div className="min-h-dvh bg-base text-ink">
       {/* Barre latérale — ordinateur (§14.3) */}
-      <aside className="fixed inset-y-0 left-0 z-20 hidden w-60 flex-col border-r border-line bg-surface/60 px-4 py-6 sm:flex">
+      <aside className="fixed inset-y-0 left-0 z-20 hidden w-60 flex-col border-r border-line bg-surface px-4 py-6 sm:flex">
         <div className="mb-1 flex items-center gap-2.5 px-2">
           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent text-accent-ink">
             <Dumbbell size={20} strokeWidth={2.5} />
@@ -96,7 +96,7 @@ export default function Layout(): ReactNode {
       </aside>
 
       {/* En-tête — mobile */}
-      <header className="sticky top-0 z-20 flex items-center justify-between border-b border-line bg-base/90 px-4 py-3 backdrop-blur sm:hidden">
+      <header className="sticky top-0 z-20 flex items-center justify-between border-b border-line bg-surface px-4 py-3 sm:hidden">
         <span className="flex items-center gap-2 font-extrabold tracking-tight">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-accent-ink">
             <Dumbbell size={17} strokeWidth={2.5} />
@@ -106,12 +106,12 @@ export default function Layout(): ReactNode {
         <DataStatus />
       </header>
 
-      <main className="mx-auto w-full max-w-6xl px-4 pb-28 pt-5 sm:pb-10 sm:pl-72 sm:pr-8 sm:pt-8">
+      <main className="mx-auto w-full max-w-6xl px-4 pb-28 pt-6 sm:pb-10 sm:pl-72 sm:pr-8 sm:pt-8">
         <Outlet />
       </main>
 
       {/* Navigation inférieure — mobile, accessible au pouce (§14.3) */}
-      <nav className="fixed inset-x-0 bottom-0 z-20 flex items-end justify-around border-t border-line bg-surface/95 px-2 pb-[env(safe-area-inset-bottom)] pt-2 backdrop-blur sm:hidden" aria-label="Navigation principale">
+      <nav className="fixed inset-x-0 bottom-0 z-20 flex items-end justify-around border-t border-line bg-surface px-2 pb-[env(safe-area-inset-bottom)] pt-2 sm:hidden" aria-label="Navigation principale">
         {NAV.map((item) => <NavItem key={item.to} {...item} />)}
       </nav>
     </div>

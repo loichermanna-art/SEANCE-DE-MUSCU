@@ -3,7 +3,7 @@
 - **État :** En cours — première passe du système visuel intégrée ; audit indépendant et tests à réaliser.
 - **Résumé :** passage du thème sombre au thème clair premium demandé par l'utilisateur. Palette centralisée, fond gris très léger, surfaces blanches, accent bleu, hiérarchie typographique et focus visible ; navigation mobile/desktop harmonisée sans retirer de routes ni changer le comportement des données.
 - **Branche :** `arena/aa006b12-seance-de-muscu`.
-- **Commit de référence au début de la passe :** branche de travail existante ; aucun changement sur `main`.
+- **Commit de référence de la passe UI :** `1a13ca13aa3e8a52251d7136f031788d8bc70a73` (navigation responsive). Aucun changement sur `main`.
 - **Fichiers modifiés :** `src/styles/index.css`, `src/components/ui.tsx`, `src/components/Layout.tsx`, `docs/00-coordination.md`.
 - **Décisions :** garder React/Tailwind et les composants existants ; pas de réécriture des pages ni de données fictives ; réduire transparence/flou de la navigation ; respecter `prefers-reduced-motion` et ajouter un style de focus visible.
 - **Vérifications :** fichiers relus depuis la branche après mise à jour. `npm test`, `npm run build` et vérification visuelle navigateur mobile/desktop **non exécutés** dans cette passe faute d'environnement d'exécution du projet connecté à GitHub.

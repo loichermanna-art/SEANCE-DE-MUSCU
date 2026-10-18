@@ -1,3 +1,20 @@
+### 2026-10-18 — P3-02 — Spécification programmes et jours — Assistant ChatGPT
+
+- **État :** Proposition documentaire déposée ; validation utilisateur attendue. L'implémentation P3-02 n'a pas commencé.
+- **Branche :** `arena/aa006b12-seance-de-muscu`.
+- **Commit de référence de la spécification :** `8b9f9b468fdc7d6563e80351286b47f29a55ee01` (ajout de `docs/P3-02-specification-programmes-jours.md`).
+- **Documents consultés :** `docs/00-coordination.md`, `docs/HANDOFF.md`, `docs/03-modele-de-donnees.md`, `docs/04-regles-metier.md`, `docs/05-roadmap.md`, `docs/07-plan-motion-interface.md` et `src/domain/types.ts`.
+- **Fichiers modifiés :** ajout de `docs/P3-02-specification-programmes-jours.md` ; mise à jour de ce journal uniquement. Aucun code fonctionnel modifié.
+- **Contenu :** parcours de liste/détail, formulaires programme/jour, CRUD et ordre des jours, interface mobile-first, états chargement/vide/erreur/succès, validations proposées, statuts actif/pause/archive, confirmations et critères d'acceptation.
+- **Décisions proposées :** réordonnancement accessible par boutons Monter/Descendre et ordre contigu ; programme archivé en lecture seule, restauration en pause ; suppression physique bloquée si le programme/jour est référencé par une séance, avec archivage proposé pour le programme parent. Les limites de longueur des champs sont identifiées comme propositions à valider.
+- **Protection de l'historique :** le CRUD ne supprime ni ne modifie `workout_sessions`, `workout_exercises` ni `workout_sets`. Une suppression physique est refusée si elle risquerait de casser une référence historique. Toute stratégie future de détachement/tombstone nécessitera une décision explicite.
+- **Hors périmètre :** sélection et gestion des exercices dans les jours, séries/répétitions/charges/repos — P3-03.
+- **Vérifications :** lecture documentaire et statique seulement. `npm test` et `npm run build` **non exécutés**, car aucun code applicatif n'a été modifié ; aucune validation navigateur réalisée pour cette tâche.
+- **Questions à valider :** les limites de longueur proposées (programme 80, objectif 240, jour 60, note 500 caractères) ; les règles de suppression protégée ; le comportement des programmes archivés et restauration en pause.
+- **Prochaine action / destinataire :** l'utilisateur examine la spécification et confirme ou ajuste les décisions. Après validation explicite, attribuer l'implémentation P3-02 à un seul contributeur ; garder P3-03 distinct et ne pas modifier `main`.
+
+---
+
 ### 2026-10-18 — Déploiement Vercel de l'aperçu UI-01
 
 - **État :** Déploiement Preview prêt (READY), issu de la branche `arena/aa006b12-seance-de-muscu`, commit `5d822d9`.

@@ -1,14 +1,8 @@
 import { CalendarDays, Dumbbell, HeartPulse, TrendingUp } from 'lucide-react'
+import { ProgramsPage as ProgramsManagementPage } from './ProgramsPage'
 import { EmptyState, PageTitle, PhaseBadge } from '../components/ui'
 
-export function ProgramsPage() {
-  return (
-    <div>
-      <div className="flex flex-wrap items-center gap-3"><PageTitle title="Programme" subtitle="Création de programmes, jours d’entraînement et exercices planifiés." /><span className="mb-5 ml-auto"><PhaseBadge phase="Phase 3 — prochaine étape" /></span></div>
-      <EmptyState icon={<CalendarDays size={28} />} title="Aucun programme pour le moment" message="La création de programmes arrive à la prochaine phase : tu pourras organiser tes jours (Pectoraux/Triceps, Dos/Biceps, Jambes…), tes séries, répétitions, charges cibles et temps de repos." action={{ label: 'Préparer mon profil', to: '/profil' }} />
-    </div>
-  )
-}
+export function ProgramsPage() { return <ProgramsManagementPage /> }
 
 export function WorkoutPage() {
   return (

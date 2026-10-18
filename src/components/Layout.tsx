@@ -61,10 +61,10 @@ function NavItem({ to, label, icon: Icon, end, primary }: {
       end={end}
       className={({ isActive }) =>
         primary
-          ? `flex flex-col items-center gap-0.5 rounded-xl px-3 py-1.5 text-[11px] font-bold transition-colors sm:flex-row sm:gap-3 sm:px-4 sm:py-3 sm:text-sm ${
+          ? `gym-nav-item gym-nav-primary gym-action flex flex-col items-center gap-0.5 rounded-xl px-3 py-1.5 text-[11px] font-bold sm:flex-row sm:gap-3 sm:px-4 sm:py-3 sm:text-sm ${
               isActive ? 'bg-accent text-accent-ink' : 'bg-accent text-accent-ink hover:bg-blue-700'
             }`
-          : `flex flex-col items-center gap-0.5 rounded-xl px-2 py-1.5 text-[11px] font-medium transition-colors sm:flex-row sm:gap-3 sm:px-4 sm:py-3 sm:text-sm ${
+          : `gym-nav-item gym-action flex flex-col items-center gap-0.5 rounded-xl px-2 py-1.5 text-[11px] font-medium sm:flex-row sm:gap-3 sm:px-4 sm:py-3 sm:text-sm ${
               isActive ? 'bg-blue-50 text-accent' : 'text-muted hover:bg-surface2 hover:text-ink'
             }`
       }

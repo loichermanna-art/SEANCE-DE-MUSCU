@@ -49,7 +49,7 @@ export default function DashboardPage() {
               <h2 className="flex items-center gap-2 font-bold"><RotateCcw size={18} /> Séance en cours : {data.inProgress.name}</h2>
               <p className="mt-0.5 text-sm text-muted">Commencée le {data.inProgress.startedAt ? new Date(data.inProgress.startedAt).toLocaleString('fr-FR') : '—'} — aucune donnée n’est perdue.</p>
             </div>
-            <Link to="/seance" className="rounded-xl bg-accent px-5 py-3 font-bold text-accent-ink transition hover:brightness-110">Reprendre ma séance</Link>
+            <Link to="/seance" className="gym-action rounded-xl bg-accent px-5 py-3 font-bold text-accent-ink hover:brightness-110">Reprendre ma séance</Link>
           </div>
         </Card>
       ) : null}
@@ -67,14 +67,14 @@ export default function DashboardPage() {
           {data?.activeProgram ? (
             <>
               <p className="text-sm text-muted">Programme actif : <strong className="text-ink">{data.activeProgram.name}</strong>. Les séances planifiées apparaîtront ici dès la gestion des programmes (Phase 3).</p>
-              <Link to="/programme" className="mt-4 inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-bold text-accent-ink transition hover:brightness-110"><Play size={17} /> Voir mon programme</Link>
+              <Link to="/programme" className="gym-action mt-4 inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-bold text-accent-ink hover:brightness-110"><Play size={17} /> Voir mon programme</Link>
             </>
           ) : (
             <>
               <p className="text-sm text-muted">Aucun programme pour le moment. Crée ton premier programme pour savoir exactement quoi entraîner, quand et dans quel ordre.</p>
               <div className="mt-4 flex flex-wrap gap-2">
-                <Link to="/programme" className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-bold text-accent-ink transition hover:brightness-110"><Play size={17} /> Créer mon programme</Link>
-                <Link to="/seance" className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface2 px-5 py-3 font-semibold transition hover:border-accent/50"><Dumbbell size={17} /> Séance libre</Link>
+                <Link to="/programme" className="gym-action inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-bold text-accent-ink hover:brightness-110"><Play size={17} /> Créer mon programme</Link>
+                <Link to="/seance" className="gym-action inline-flex items-center gap-2 rounded-xl border border-line bg-surface2 px-5 py-3 font-semibold hover:border-accent/50"><Dumbbell size={17} /> Séance libre</Link>
               </div>
             </>
           )}

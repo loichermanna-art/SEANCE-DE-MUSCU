@@ -11,6 +11,7 @@ const EQUIPMENT_LABELS: Record<string, string> = {
 export default function ExercisesPage() {
   const [query, setQuery] = useState('')
   const [muscle, setMuscle] = useState<string>('tous')
+  const [filtersUsed, setFiltersUsed] = useState(false)
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
   const data = useLiveQuery(async () => {
@@ -59,7 +60,7 @@ export default function ExercisesPage() {
           <span className="sr-only">Rechercher un exercice</span>
           <input
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => { setFiltersUsed(true); setQuery(e.target.value) }}
             placeholder="Rechercher (ex. développé, rowing, squat…)"
             className="w-full rounded-xl border border-line bg-surface py-3 pl-10 pr-3 text-sm outline-none placeholder:text-muted/70 focus:border-accent"
           />
@@ -68,7 +69,7 @@ export default function ExercisesPage() {
           <span className="sr-only">Filtrer par groupe musculaire</span>
           <select
             value={muscle}
-            onChange={(e) => setMuscle(e.target.value)}
+            onChange={(e) => { setFiltersUsed(true); setMuscle(e.target.value) }}
             className="w-full rounded-xl border border-line bg-surface px-3 py-3 text-sm outline-none focus:border-accent sm:w-56"
           >
             <option value="tous">Tous les muscles</option>
@@ -85,7 +86,7 @@ export default function ExercisesPage() {
             <button
               key={e.id}
               onClick={() => setSelectedId(selectedId === e.id ? null : e.id)}
-              className={`rounded-2xl border p-4 text-left transition ${selectedId === e.id ? 'border-accent bg-surface2' : 'border-line bg-surface hover:border-accent/40'}`}
+              className={`gym-interactive-card ${filtersUsed ? 'gym-list-item-enter' : ''} rounded-2xl border p-4 text-left ${selectedId === e.id ? 'border-accent bg-surface2' : 'border-line bg-surface hover:border-accent/40'}`}
               aria-expanded={selectedId === e.id}
             >
               <h2 className="font-semibold leading-snug">{e.name}</h2>
@@ -101,7 +102,7 @@ export default function ExercisesPage() {
       )}
 
       {selected ? (
-        <Card className="mt-5">
+        <Card className="gym-panel-enter mt-5">
           <h2 className="text-lg font-bold">{selected.name}</h2>
           <p className="mt-1 text-sm text-muted">{selected.description}</p>
           <h3 className="mt-4 text-sm font-bold uppercase tracking-wide text-muted">Consignes d’exécution</h3>

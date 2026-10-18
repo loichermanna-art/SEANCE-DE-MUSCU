@@ -11,7 +11,7 @@ export function Card({ children, className = '' }: { children: ReactNode; classN
 
 export function PageTitle({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
-    <header className="mb-6">
+    <header className="gym-page-enter mb-6">
       <h1 className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">{title}</h1>
       {subtitle ? <p className="mt-1.5 max-w-3xl text-sm leading-6 text-muted">{subtitle}</p> : null}
     </header>
@@ -31,7 +31,7 @@ export function EmptyState({ icon, title, message, action }: {
       <h2 className="font-semibold text-ink">{title}</h2>
       <p className="mt-1 max-w-md text-sm leading-6 text-muted">{message}</p>
       {action ? (
-        <Link to={action.to} className="mt-4 inline-flex min-h-11 items-center justify-center rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-accent-ink transition-colors hover:bg-blue-700 focus-visible:outline-offset-2">
+        <Link to={action.to} className="gym-action mt-4 inline-flex min-h-11 items-center justify-center rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-accent-ink hover:bg-blue-700 focus-visible:outline-offset-2">
           {action.label}
         </Link>
       ) : null}

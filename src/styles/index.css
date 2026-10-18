@@ -20,12 +20,20 @@
   color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
+
+  /* Motion tokens adapted from the approved GYM OS motion plan. */
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --motion-d1: 150ms;
+  --motion-d2: 250ms;
+  --motion-d3: 400ms;
+  --motion-distance: 8px;
 }
 
 html {
   min-height: 100%;
   background: var(--color-base);
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
@@ -73,6 +81,100 @@ a {
   color: #172033;
 }
 
+/* Short, task-oriented motion: no cinematic intro or perpetual effects. */
+.gym-page-enter {
+  animation: gym-page-enter var(--motion-d2) var(--motion-ease-out);
+}
+
+@keyframes gym-page-enter {
+  from { opacity: 0.72; transform: translate3d(0, var(--motion-distance), 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+.gym-action,
+.gym-interactive-card {
+  transition: transform var(--motion-d1) var(--motion-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gym-action:hover,
+  .gym-interactive-card:hover {
+    transform: translate3d(0, -1px, 0);
+  }
+}
+
+.gym-action:active,
+.gym-interactive-card:active {
+  transform: scale(0.99);
+}
+
+.gym-list-item-enter {
+  animation: gym-list-item-enter var(--motion-d2) var(--motion-ease-out);
+}
+
+@keyframes gym-list-item-enter {
+  from { opacity: 0.65; transform: translate3d(0, var(--motion-distance), 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+.gym-panel-enter {
+  animation: gym-panel-enter var(--motion-d2) var(--motion-ease-out);
+}
+
+@keyframes gym-panel-enter {
+  from { opacity: 0.7; transform: scale(0.99); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Active route marker: vertical in the sidebar, horizontal in bottom nav. */
+.gym-nav-item {
+  position: relative;
+}
+
+.gym-nav-item::before {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+  border-radius: 999px;
+  background: var(--color-accent);
+  opacity: 0;
+  transition: transform var(--motion-d2) var(--motion-ease-out), opacity var(--motion-d1) ease-out;
+}
+
+.gym-nav-primary::before {
+  background: var(--color-accent-ink);
+}
+
+@media (min-width: 640px) {
+  .gym-nav-item::before {
+    top: 50%;
+    left: 0;
+    width: 3px;
+    height: 18px;
+    transform: translate3d(0, -50%, 0) scaleY(0.35);
+  }
+
+  .gym-nav-item[aria-current="page"]::before {
+    opacity: 1;
+    transform: translate3d(0, -50%, 0) scaleY(1);
+  }
+}
+
+@media (max-width: 639px) {
+  .gym-nav-item::before {
+    bottom: 0;
+    left: 50%;
+    width: 20px;
+    height: 3px;
+    transform: translate3d(-50%, 0, 0) scaleX(0.35);
+  }
+
+  .gym-nav-item[aria-current="page"]::before {
+    opacity: 1;
+    transform: translate3d(-50%, 0, 0) scaleX(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -81,5 +183,18 @@ a {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .gym-page-enter,
+  .gym-list-item-enter,
+  .gym-panel-enter {
+    animation: none !important;
+  }
+
+  .gym-action:hover,
+  .gym-action:active,
+  .gym-interactive-card:hover,
+  .gym-interactive-card:active {
+    transform: none;
   }
 }

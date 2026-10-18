@@ -1,6 +1,6 @@
 # Plan motion — Interface GYM OS
 
-**Statut : proposition à valider par l'utilisateur avant toute implémentation motion.**
+**Statut : validé par l'utilisateur le 2026-10-18 ; première passe implémentée sur l'interface existante.**
 
 ## Source et contexte
 
@@ -72,4 +72,4 @@ Les animations portent seulement sur `transform`, `opacity`, `clip-path` et les 
 
 Cette proposition concerne uniquement un **système de motion discret pour l'interface existante**, avec un exemple précis pour l'organisation des jours de programme. Elle ne commence pas P3-02 (CRUD) ni P3-04 (écran fonctionnel complet).
 
-Après validation par l'utilisateur, les jetons et les micro-interactions pourront être implémentés sur les composants/navigation existants. Les animations du futur écran Programmes seront ajoutées avec son implémentation, conformément à cette spécification. Aucun nouveau paquet motion ne sera ajouté sans justification et accord.
+Après validation utilisateur, les jetons et micro-interactions ont été implémentés sur les composants/navigation existants. Les animations FLIP des jours de programme restent différées jusqu'à la création réelle de cette interface en phase 3. Aucun nouveau paquet motion n'a été ajouté.

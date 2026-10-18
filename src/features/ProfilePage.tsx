@@ -117,7 +117,7 @@ export default function ProfilePage() {
               <textarea id="pref" className={inputCls} rows={3} value={preferencesText} onChange={(e) => setPreferencesText(e.target.value)} placeholder="Ex. 4 jours/semaine, salle complète, éviter le squat lourd, préférer les haltères…" />
             </div>
             {error ? <p role="alert" className="rounded-xl border border-danger/40 bg-danger/10 px-3 py-2 text-sm text-danger">{error}</p> : null}
-            <button type="submit" className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-bold text-accent-ink transition hover:brightness-110">
+            <button type="submit" className="gym-action inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-bold text-accent-ink hover:brightness-110">
               <Save size={17} /> {saved ? 'Enregistré ✓' : 'Enregistrer le profil'}
             </button>
           </form>
@@ -131,7 +131,7 @@ export default function ProfilePage() {
                 {goals.map((g) => (
                   <li key={g.id} className="flex items-center justify-between gap-2 rounded-xl bg-surface2/60 px-3 py-2.5 text-sm">
                     <span><strong>{GOAL_LABELS[g.goalType]}</strong>{g.description !== GOAL_LABELS[g.goalType] ? ` — ${g.description}` : ''} <span className="text-muted">(priorité {g.priority})</span></span>
-                    <button onClick={() => deleteGoal(g.id)} aria-label={`Supprimer l’objectif ${g.description}`} className="text-muted transition hover:text-danger"><Trash2 size={16} /></button>
+                    <button onClick={() => deleteGoal(g.id)} aria-label={`Supprimer l’objectif ${g.description}`} className="gym-action text-muted hover:text-danger"><Trash2 size={16} /></button>
                   </li>
                 ))}
               </ul>
@@ -143,7 +143,7 @@ export default function ProfilePage() {
                 {Object.entries(GOAL_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
               </select>
               <input className={inputCls} value={goalText} onChange={(e) => setGoalText(e.target.value)} placeholder="Précision (facultatif)" aria-label="Précision sur l’objectif" />
-              <button type="submit" className="shrink-0 rounded-xl border border-line bg-surface2 px-4 py-2.5 text-sm font-semibold transition hover:border-accent/50">Ajouter</button>
+              <button type="submit" className="gym-action shrink-0 rounded-xl border border-line bg-surface2 px-4 py-2.5 text-sm font-semibold hover:border-accent/50">Ajouter</button>
             </form>
           </Card>
 
@@ -164,7 +164,7 @@ export default function ProfilePage() {
             </div>
             <button
               onClick={async () => { if (prefs) await savePreferences({ ...prefs, defaultRestSeconds: rest, unitSystem: unit }) }}
-              className="mt-3 rounded-xl border border-line bg-surface2 px-4 py-2.5 text-sm font-semibold transition hover:border-accent/50"
+              className="gym-action mt-3 rounded-xl border border-line bg-surface2 px-4 py-2.5 text-sm font-semibold hover:border-accent/50"
             >
               Enregistrer les préférences
             </button>
@@ -173,7 +173,7 @@ export default function ProfilePage() {
           <Card>
             <h2 className="mb-1 font-bold">Mes données</h2>
             <p className="mb-3 text-sm text-muted">Tu restes propriétaire de tes données : exporte-les à tout moment en JSON. L’import et la synchronisation cloud arrivent en Phase 7.</p>
-            <button onClick={onExport} className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface2 px-4 py-2.5 text-sm font-semibold transition hover:border-accent/50">
+            <button onClick={onExport} className="gym-action inline-flex items-center gap-2 rounded-xl border border-line bg-surface2 px-4 py-2.5 text-sm font-semibold hover:border-accent/50">
               <Download size={16} /> Exporter mes données (JSON)
             </button>
           </Card>

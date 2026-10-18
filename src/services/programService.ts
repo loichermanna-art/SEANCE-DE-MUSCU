@@ -144,7 +144,7 @@ export const programService = {
   },
 
   async deleteDay(id: string): Promise<void> {
-    await db.transaction('rw', db.programDays, db.programExercises, db.workoutSessions, async () => {
+    await db.transaction('rw', db.programDays, db.programExercises, db.workoutSessions, db.programs, async () => {
       const day = await db.programDays.get(id)
       if (!day) throw new ProgramServiceError('Ce jour est introuvable.', 'NOT_FOUND')
       const program = await db.programs.get(day.programId)

@@ -25,7 +25,7 @@ function optionalText(value: string | undefined, max: number, label: string): st
   return trimmed
 }
 
-function validateProgram(input: ProgramInput): ProgramInput {
+export function validateProgram(input: ProgramInput): ProgramInput {
   if (!(['actif', 'pause', 'archive'] as ProgramStatus[]).includes(input.status)) {
     throw new ProgramServiceError('Statut de programme invalide.', 'VALIDATION')
   }
@@ -36,7 +36,7 @@ function validateProgram(input: ProgramInput): ProgramInput {
   }
 }
 
-function validateDay(input: ProgramDayInput): ProgramDayInput {
+export function validateDay(input: ProgramDayInput): ProgramDayInput {
   if (input.scheduledWeekday !== undefined && (!Number.isInteger(input.scheduledWeekday) || input.scheduledWeekday < 1 || input.scheduledWeekday > 7)) {
     throw new ProgramServiceError('Choisis un jour de semaine valide.', 'VALIDATION')
   }

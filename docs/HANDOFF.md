@@ -1,27 +1,30 @@
 ### 2026-10-18 — UI-01 — Assistant ChatGPT (mandat explicite)
 
-- **État :** En cours — première passe du système visuel intégrée ; audit indépendant et tests à réaliser.
-- **Résumé :** passage du thème sombre au thème clair premium demandé par l'utilisateur. Palette centralisée, fond gris très léger, surfaces blanches, accent bleu, hiérarchie typographique et focus visible ; navigation mobile/desktop harmonisée sans retirer de routes ni changer le comportement des données.
+- **État :** En cours — thème clair et première passe motion intégrés ; audit indépendant et contrôle visuel responsive restent à faire.
+- **Résumé :** thème clair premium demandé par l'utilisateur, navigation responsive et système motion fonctionnel discret adapté au guide Gmail. Aucun comportement de données ou route n'a été changé.
 - **Branche :** `arena/aa006b12-seance-de-muscu`.
-- **Commit de référence de la passe UI :** `1a13ca13aa3e8a52251d7136f031788d8bc70a73` (navigation responsive). Aucun changement sur `main`.
-- **Fichiers modifiés :** `src/styles/index.css`, `src/components/ui.tsx`, `src/components/Layout.tsx`, `docs/00-coordination.md`.
-- **Décisions :** garder React/Tailwind et les composants existants ; pas de réécriture des pages ni de données fictives ; réduire transparence/flou de la navigation ; respecter `prefers-reduced-motion` et ajouter un style de focus visible.
-- **Vérifications :** fichiers relus depuis la branche après mise à jour. `npm test`, `npm run build` et vérification visuelle navigateur mobile/desktop **non exécutés** dans cette passe faute d'environnement d'exécution du projet connecté à GitHub.
-- **Limites / prochaine étape :** poursuivre les ajustements visuels ciblés après cette fondation, puis réaliser l'audit indépendant (diff, tests, build, responsive et interactions) avant de déclarer la tâche terminée.
+- **Référence / implémentation :** thème et navigation établis dans les commits précédents ; motion approuvé puis implémenté dans `3b4cb57` (`feat: add restrained motion design to GYM OS UI`). Aucun changement sur `main`.
+- **Fichiers UI motion :** `src/styles/index.css`, `src/components/ui.tsx`, `src/components/Layout.tsx`, `src/features/DashboardPage.tsx`, `src/features/ExercisesPage.tsx`, `src/features/ProfilePage.tsx`; spécification `docs/07-plan-motion-interface.md`.
+- **Décisions :** garder React/Tailwind, aucun paquet motion ajouté ; pas d'intro, de parallaxe, de curseur custom, de scroll lissé forcé ni de boucle décorative ; mouvement réduit pris en charge.
+- **Vérifications :** `npm test` réussi (16 tests) ; `npm run build` réussi avec avertissement de bundle JS >500 kB ; `curl http://localhost:5173/` renvoie HTTP 200. `npm ci` a signalé 3 vulnérabilités de dépendances (1 modérée, 2 critiques), non corrigées dans cette tâche.
+- **Limites / prochaine étape :** vérification visuelle manuelle desktop/mobile/mouvement réduit et audit indépendant requis avant clôture.
 
 # GYM OS — Journal de passation
 
 Ce journal conserve les informations utiles au prochain contributeur. Ajouter les entrées les plus récentes en haut. Ne pas y copier de secrets, clés API ou données personnelles.
 
-### 2026-10-18 — Motion design de l'interface — proposition en attente de validation utilisateur
+### 2026-10-18 — UI-01 — Motion design — Assistant ChatGPT
 
-- **Source examinée :** pièce jointe Gmail `Guide-Motion-Design-Premium.pdf` (50 pages), reçue dans le message « GUIDE MOTION DESIGN ».
-- **Contexte visuel vérifié :** dernière passe publiée de l'UI claire premium sur la branche ; commit de référence courant au début de cette tâche : `3dba53f`.
-- **Travail effectué :** lecture des principes de mouvement, jetons, adaptation aux applications/tableaux de bord, accessibilité et protocole de contrôle qualité ; création de [`07-plan-motion-interface.md`](07-plan-motion-interface.md) avec la métaphore, les jetons et un storyboard de motion propre à GYM OS.
-- **Proposition centrale :** application fonctionnelle, aucun préchargeur ou effet décoratif continu ; indicateur bleu discret de sélection ; FLIP court uniquement lors d'une vraie réorganisation ; contenu immédiatement disponible ; mouvement réduit et clavier prévus.
-- **Fichiers modifiés :** `docs/07-plan-motion-interface.md`, `README.md`, `docs/00-coordination.md`, `docs/HANDOFF.md`.
-- **Code applicatif :** non modifié. `npm test` et `npm run build` non exécutés car aucun code n'a changé.
-- **État / prochaine étape :** attendre la validation ou les corrections de l'utilisateur sur le plan motion ; ne pas commencer les changements de code motion avant cette validation.
+- **État :** Première passe implémentée ; audit visuel indépendant restant.
+- **Décision :** l'utilisateur a validé le plan motion `docs/07-plan-motion-interface.md` le 2026-10-18 après examen du guide Gmail.
+- **Source examinée :** pièce jointe `Guide-Motion-Design-Premium.pdf` (50 pages), message « GUIDE MOTION DESIGN ».
+- **Commit d'implémentation :** `3b4cb57` sur `arena/aa006b12-seance-de-muscu`.
+- **Implémentation :** jetons motion centralisés ; entrée de titre légère ; marqueur d'itinéraire actif (vertical desktop/horizontal mobile, y compris la navigation Séance) ; retour tactile/hover bref des actions ; animation discrète du panneau de détail d'exercice et des nouveaux résultats après modification des filtres ; réduction de mouvement respectée. Aucun préchargeur, boucle décorative, parallaxe, scroll lissé forcé ou nouvelle dépendance.
+- **Fichiers modifiés :** `src/styles/index.css`, `src/components/Layout.tsx`, `src/components/ui.tsx`, `src/features/DashboardPage.tsx`, `src/features/ExercisesPage.tsx`, `src/features/ProfilePage.tsx`, `docs/07-plan-motion-interface.md`.
+- **Hors périmètre :** P3-02 (CRUD programmes/jours) n'a pas été démarrée ; le FLIP des jours sera ajouté quand cette interface existera, sous sa spécification approuvée.
+- **Vérifications :** `npm test` réussi (16 tests). `npm run build` réussi ; Vite affiche l'avertissement de chunk JS >500 kB. `npm ci` réussi mais signale 3 vulnérabilités dans l'arbre de dépendances (1 modérée, 2 critiques) ; aucune correction automatique appliquée. `curl http://localhost:5173/` renvoie HTTP 200.
+- **Limite :** la vérification visuelle manuelle des formats desktop/mobile et du mode mouvement réduit reste à faire par l'auditeur.
+- **Prochaine action :** audit indépendant selon le protocole ; si aucun défaut bloquant/majeur, l'utilisateur décidera de clore UI-01 ou d'ajuster le motion.
 
 ### 2026-10-18 — Synchronisation inter-assistants
 

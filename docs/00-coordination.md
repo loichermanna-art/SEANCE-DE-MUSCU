@@ -27,7 +27,7 @@ Les tâches marquées « À attribuer » ne sont prises par aucun assistant tant
 |---|---|---|---|---|
 | UI-01 | Déployer progressivement le thème clair premium et harmoniser les composants/navigation sans régression | En cours | Assistant ChatGPT (mandat explicite de l'utilisateur) | — |
 | P3-01 | Examiner l'existant lié aux programmes et proposer un découpage précis, sans modifier le code fonctionnel | Terminé | Assistant ChatGPT | — |
-| P3-02 | Implémenter la création, modification et suppression des programmes et de leurs jours | À faire | À attribuer | P3-01 |
+| P3-02 | Implémenter la création, modification et suppression des programmes et de leurs jours | En cours | Assistant ChatGPT (validation explicite utilisateur) | P3-01 |
 | P3-03 | Permettre d'ajouter/réordonner des exercices dans les jours, avec séries, répétitions, charge cible et repos | À faire | À attribuer | P3-02 |
 | P3-04 | Relier l'interface de programme aux vraies données locales, gérer les états vide/erreur/succès et ajouter des tests | À faire | À attribuer | P3-02, P3-03 |
 | P4-01 | Commencer la séance en direct à partir d'un jour de programme | À faire | À attribuer | Phase 3 terminée |

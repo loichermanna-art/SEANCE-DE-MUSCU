@@ -1,4 +1,4 @@
-import { CalendarDays, Dumbbell, HeartPulse, TrendingUp } from 'lucide-react'
+import { Dumbbell, HeartPulse, TrendingUp } from 'lucide-react'
 import { ProgramsPage as ProgramsManagementPage } from './ProgramsPage'
 import { EmptyState, PageTitle, PhaseBadge } from '../components/ui'
 

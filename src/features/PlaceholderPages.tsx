@@ -1,14 +1,5 @@
-import { HeartPulse, TrendingUp } from 'lucide-react'
+import { HeartPulse } from 'lucide-react'
 import { EmptyState, PageTitle, PhaseBadge } from '../components/ui'
-
-export function ProgressPage() {
-  return (
-    <div>
-      <div className="flex flex-wrap items-center gap-3"><PageTitle title="Progression" subtitle="Graphiques, records et historiques — alimentés uniquement par tes vraies séances." /><span className="mb-5 ml-auto"><PhaseBadge phase="Phase 5" /></span></div>
-      <EmptyState icon={<TrendingUp size={28} />} title="Aucune donnée de progression pour l’instant" message="C’est normal : GYM OS n’affiche jamais de graphiques inventés. Dès tes premières séances terminées, tu verras ici l’évolution de tes charges, ton volume et ta régularité." />
-    </div>
-  )
-}
 
 export function RecoveryPage() {
   return (

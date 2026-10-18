@@ -61,3 +61,27 @@ Décisions :
 Tests : `src/domain/session.test.ts` (10) +
 `src/services/workoutService.test.ts` (10, parcours principal sur
 vraie base IndexedDB simulée) — suite totale : **44 verts**.
+
+## Phase 5 — Historique & progression
+
+**Livrable vérifiable :** graphiques alimentés uniquement par les
+vraies séances ✅
+
+Décisions :
+
+1. **Règles pures** (`src/domain/history.ts`) : progression de
+   charge = top set par séance (charge max, ex æquo → reps max) ;
+   bilans hebdomadaires (lundi→dimanche) avec volume agrégé ;
+   tendance sur les 3 derniers points. `now` injectable pour des
+   tests déterministes.
+2. **Fiche exercice `/exercices/:id`** : records §8.4 (charge max,
+   reps max, meilleur volume de séance, séries de travail),
+   dernières performances, courbe de charge (Recharts).
+3. **Bilan hebdomadaire** : cette semaine vs la précédente
+   (séances, minutes, séries, reps, volume) + barres par semaine.
+4. **Honnêteté des données** (principe n°4) : état vide explicite
+   tant qu’aucune séance n’est terminée ; volume « — » au poids du
+   corps (§8.2) ; séries non validées exclues partout (§19.2).
+
+Tests : `src/domain/history.test.ts` (5) — suite totale :
+**49 verts**.

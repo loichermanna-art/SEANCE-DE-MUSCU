@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { Library, Plus, Search, Trash2 } from 'lucide-react'
 import { db } from '../services/db'
 import { deleteCustomExercise } from '../services/exerciseService'
-import { Card, EmptyState, PageTitle } from '../components/ui'
+import { EmptyState, PageTitle } from '../components/ui'
 import Modal from '../components/Modal'
 import CustomExerciseForm from '../components/CustomExerciseForm'
 
@@ -15,7 +16,6 @@ export default function ExercisesPage() {
   const [query, setQuery] = useState('')
   const [muscle, setMuscle] = useState<string>('tous')
   const [equipment, setEquipment] = useState<string>('tous')
-  const [selectedId, setSelectedId] = useState<string | null>(null)
   const [creating, setCreating] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null)
 
@@ -50,8 +50,6 @@ export default function ExercisesPage() {
     const matchesEquipment = equipment === 'tous' || e.equipment === equipment
     return matchesQuery && matchesMuscle && matchesEquipment
   })
-
-  const selected = data?.exercises.find((e) => e.id === selectedId)
 
   return (
     <div>
@@ -105,11 +103,10 @@ export default function ExercisesPage() {
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((e) => (
-            <button
+            <Link
               key={e.id}
-              onClick={() => setSelectedId(selectedId === e.id ? null : e.id)}
-              className={`rounded-2xl border p-4 text-left transition ${selectedId === e.id ? 'border-accent bg-surface2' : 'border-line bg-surface hover:border-accent/40'}`}
-              aria-expanded={selectedId === e.id}
+              to={`/exercices/${e.id}`}
+              className="block rounded-2xl border border-line bg-surface p-4 text-left transition hover:border-accent/40"
             >
               <h2 className="font-semibold leading-snug">{e.name}</h2>
               <p className="mt-1 text-xs text-muted">{EQUIPMENT_LABELS[e.equipment] ?? e.equipment} · Difficulté {e.difficulty}/3 {e.isCustom ? '· Personnalisé' : ''}</p>
@@ -127,26 +124,10 @@ export default function ExercisesPage() {
                   <span key={m.name + m.role} className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${m.role === 'principal' ? 'bg-accent/20 text-accent' : 'bg-surface2 text-muted'}`}>{m.name}</span>
                 ))}
               </p>
-            </button>
+            </Link>
           ))}
         </div>
       )}
-
-      {selected ? (
-        <Card className="mt-5">
-          <h2 className="text-lg font-bold">{selected.name}</h2>
-          <p className="mt-1 text-sm text-muted">{selected.description}</p>
-          <h3 className="mt-4 text-sm font-bold uppercase tracking-wide text-muted">Consignes d’exécution</h3>
-          <p className="mt-1 text-sm">{selected.instructions}</p>
-          {selected.commonMistakes ? (
-            <>
-              <h3 className="mt-4 text-sm font-bold uppercase tracking-wide text-muted">Erreurs fréquentes</h3>
-              <p className="mt-1 text-sm">{selected.commonMistakes}</p>
-            </>
-          ) : null}
-          <p className="mt-4 text-xs text-muted">L’historique de tes performances sur cet exercice apparaîtra ici après tes premières séances (Phase 5).</p>
-        </Card>
-      ) : null}
 
       {creating ? (
         <Modal title="Nouvel exercice personnalisé" onClose={() => setCreating(false)} wide>

@@ -103,3 +103,4 @@ GitHub est la source de vérité partagée ; les conversations privées des assi
 - [Règles métier](04-regles-metier.md)
 - [Roadmap](05-roadmap.md)
 - [Configuration Supabase/Vercel](06-supabase-vercel.md)
+- [Plan motion de l'interface GYM OS — proposition à valider](07-plan-motion-interface.md)

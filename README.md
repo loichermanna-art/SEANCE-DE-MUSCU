@@ -36,6 +36,7 @@ Pour répartir le travail entre contributeurs et assistants, commencer par [`doc
 | [`docs/03-modele-de-donnees.md`](docs/03-modele-de-donnees.md) | Entités, relations, intégrité |
 | [`docs/04-regles-metier.md`](docs/04-regles-metier.md) | Volume, records, progression double, récupération |
 | [`docs/05-roadmap.md`](docs/05-roadmap.md) | Phases de développement |
+| [`docs/07-plan-motion-interface.md`](docs/07-plan-motion-interface.md) | Proposition de motion design fonctionnel pour l'interface GYM OS (à valider) |
 
 ## Stack (proposition — Phase 2)
 

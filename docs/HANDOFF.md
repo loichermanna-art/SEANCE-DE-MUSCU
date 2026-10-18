@@ -13,6 +13,16 @@
 
 Ce journal conserve les informations utiles au prochain contributeur. Ajouter les entrées les plus récentes en haut. Ne pas y copier de secrets, clés API ou données personnelles.
 
+### 2026-10-18 — Motion design de l'interface — proposition en attente de validation utilisateur
+
+- **Source examinée :** pièce jointe Gmail `Guide-Motion-Design-Premium.pdf` (50 pages), reçue dans le message « GUIDE MOTION DESIGN ».
+- **Contexte visuel vérifié :** dernière passe publiée de l'UI claire premium sur la branche ; commit de référence courant au début de cette tâche : `3dba53f`.
+- **Travail effectué :** lecture des principes de mouvement, jetons, adaptation aux applications/tableaux de bord, accessibilité et protocole de contrôle qualité ; création de [`07-plan-motion-interface.md`](07-plan-motion-interface.md) avec la métaphore, les jetons et un storyboard de motion propre à GYM OS.
+- **Proposition centrale :** application fonctionnelle, aucun préchargeur ou effet décoratif continu ; indicateur bleu discret de sélection ; FLIP court uniquement lors d'une vraie réorganisation ; contenu immédiatement disponible ; mouvement réduit et clavier prévus.
+- **Fichiers modifiés :** `docs/07-plan-motion-interface.md`, `README.md`, `docs/00-coordination.md`, `docs/HANDOFF.md`.
+- **Code applicatif :** non modifié. `npm test` et `npm run build` non exécutés car aucun code n'a changé.
+- **État / prochaine étape :** attendre la validation ou les corrections de l'utilisateur sur le plan motion ; ne pas commencer les changements de code motion avant cette validation.
+
 ### 2026-10-18 — Synchronisation inter-assistants
 
 - **Règle commune :** GitHub est la source de vérité ; les conversations privées ne sont pas automatiquement partagées entre assistants.

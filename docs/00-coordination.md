@@ -29,7 +29,7 @@ Les tâches marquées « À attribuer » ne sont prises par aucun assistant tant
 | P3-01 | Examiner l'existant lié aux programmes et proposer un découpage précis, sans modifier le code fonctionnel | Terminé | Assistant ChatGPT | — |
 | P3-02 | Implémenter la création, modification et suppression des programmes et de leurs jours | **En pause** | Assistant ChatGPT (pause demandée par l’utilisateur le 2026-10-19) | P3-01 |
 | P3-03 | Permettre d'ajouter/réordonner des exercices dans les jours, avec séries, répétitions, charge cible et repos | À faire | À attribuer | P3-02 |
-| DEMO-01 | Démonstrations d’exercices en séquences animées codées (motion design) | Spécification à valider | Assistant ChatGPT — conception/audit | — |
+| DEMO-01 | Démonstrations d’exercices en séquences animées codées (motion design) | **En cours — implémentation autorisée le 2026-10-19** | Assistant ChatGPT — implémentation | Spécification validée |
 | P3-04 | Relier l'interface de programme aux vraies données locales, gérer les états vide/erreur/succès et ajouter des tests | À faire | À attribuer | P3-02, P3-03 |
 | P4-01 | Commencer la séance en direct à partir d'un jour de programme | À faire | À attribuer | Phase 3 terminée |
 

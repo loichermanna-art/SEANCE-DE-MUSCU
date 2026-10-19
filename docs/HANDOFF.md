@@ -1,3 +1,15 @@
+### 2026-10-19 — Nouvelle priorité — Démonstrations d’exercices en motion design
+
+- **Demande utilisateur :** afficher dans l’application de courtes séquences animées qui montrent l’exécution des exercices; l’utilisateur a précisé vouloir des vidéos créées avec du code en motion design.
+- **Priorité décidée par l’utilisateur :** suspendre les travaux P3-02 pour prioriser ce nouveau chantier. P3-02 reste inachevée/en cours; P3-03 n’est pas démarrée.
+- **Inventaire du modèle existant :** `exercises` stocke déjà nom, matériel, description, consignes et erreurs fréquentes; `exercise_muscles` relie les exercices aux muscles; `program_exercises` et `workout_exercises` référencent l’exercice par `exerciseId`. Aucun champ média, table de démonstration ni fichier vidéo n’existe à ce jour. Les modèles Dexie se trouvent dans `src/domain/types.ts` et `src/services/db.ts`; le schéma Supabase correspondant est `supabase/schema.sql`.
+- **Direction de contenu à intégrer à la spécification :** animations originales générées par code/motion design; l’utilisateur a également sélectionné des sources réutilisables/licenciées, donc la spécification devra clarifier si elles sont nécessaires ou si les animations originales suffisent. Ne pas intégrer d’URL externe ni de média sans validation de sa source.
+- **À spécifier avant tout code :** tables/relations nécessaires, couverture initiale des exercices, emplacement du lecteur (bibliothèque, programmes et/ou séance), contrôles de lecture, règles d’accessibilité et comportement `prefers-reduced-motion`. Toute évolution du modèle Dexie devra rester alignée avec la table PostgreSQL/Supabase.
+- **État de réalisation :** aucun code fonctionnel n’a été modifié pour ce nouveau chantier. La spécification doit être préparée par l’assistant conception/audit et validée par l’utilisateur avant implémentation, conformément au processus du dépôt.
+- **Prochaine action :** transmettre le brief à l’assistant conception/audit; après validation de la spécification, reprendre l’implémentation sur `arena/aa006b12-seance-de-muscu`. Aucun changement sur `main`.
+
+---
+
 ### 2026-10-19 — P3-02 — Durcissement et vérifications préalables
 
 - **Responsable / branche :** implémentation sur `arena/aa006b12-seance-de-muscu` ; `main` inchangée.

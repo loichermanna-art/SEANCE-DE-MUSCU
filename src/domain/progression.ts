@@ -2,6 +2,7 @@
 // Règles transparentes : toujours une PROPOSITION, jamais d'application automatique.
 
 import type { WorkoutSet } from './types'
+import { loadInKilograms } from './calculations'
 
 export interface ProgressionSuggestion {
   type: 'augmenter_charge' | 'viser_plus_de_reps' | 'prudence' | 'donnees_insuffisantes'
@@ -40,7 +41,7 @@ export function suggestDoubleProgression(params: {
     }
   }
 
-  const currentLoad = Math.max(...lastWorkSets.map((s) => s.loadValue))
+  const currentLoad = Math.max(...lastWorkSets.map(loadInKilograms))
   const allAtTop = lastWorkSets.length >= targetSets && lastWorkSets.every((s) => s.repetitions >= maxReps)
 
   if (allAtTop && currentLoad > 0) {
@@ -80,10 +81,10 @@ export function detectStagnation(sessionsNewestFirst: WorkoutSet[][]): boolean {
     .slice(0, 3)
   if (comparables.length < 3) return false
 
-  const best = (sets: WorkoutSet[]) => ({
-    load: Math.max(...sets.map((s) => s.loadValue)),
-    repsAtBestLoad: Math.max(...sets.filter((s) => s.loadValue === Math.max(...sets.map((x) => x.loadValue))).map((s) => s.repetitions)),
-  })
+  const best = (sets: WorkoutSet[]) => {
+    const load = Math.max(...sets.map(loadInKilograms))
+    return { load, repsAtBestLoad: Math.max(...sets.filter(set => loadInKilograms(set) === load).map(set => set.repetitions)) }
+  }
   const [latest, previous, oldest] = comparables.map(best)
   const progressed =
     latest.load > previous.load ||

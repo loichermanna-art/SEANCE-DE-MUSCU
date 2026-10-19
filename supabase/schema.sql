@@ -109,10 +109,11 @@ create table if not exists public.program_exercises (
   program_day_id uuid not null references public.program_days(id) on delete cascade,
   exercise_id text references public.exercises(id) on delete set null,
   exercise_order int not null default 1,
-  target_sets int not null default 3 check (target_sets > 0),
-  min_reps int not null default 8 check (min_reps >= 0),
-  max_reps int not null default 12 check (max_reps >= min_reps),
-  target_load numeric check (target_load is null or target_load >= 0),
+  target_sets int not null default 3 check (target_sets between 1 and 20),
+  min_reps int not null default 8 check (min_reps between 1 and 100),
+  max_reps int not null default 12 check (max_reps between min_reps and 100),
+  target_load numeric check (target_load is null or target_load between 0 and 1000),
+  target_load_unit text not null default 'kg' check (target_load_unit in ('kg','lb')),
   rest_seconds int not null default 90 check (rest_seconds between 0 and 3600),
   notes text
 );
@@ -139,6 +140,12 @@ create table if not exists public.workout_exercises (
   exercise_id text references public.exercises(id) on delete set null,
   exercise_name_snapshot text not null, -- historique préservé même si l'exercice est renommé (§6.3)
   exercise_order int not null default 1,
+  target_sets_snapshot int check (target_sets_snapshot is null or target_sets_snapshot between 1 and 20),
+  min_reps_snapshot int check (min_reps_snapshot is null or min_reps_snapshot between 1 and 100),
+  max_reps_snapshot int check (max_reps_snapshot is null or max_reps_snapshot between 1 and 100),
+  target_load_snapshot numeric check (target_load_snapshot is null or target_load_snapshot between 0 and 1000),
+  target_load_unit_snapshot text check (target_load_unit_snapshot is null or target_load_unit_snapshot in ('kg','lb')),
+  rest_seconds_snapshot int check (rest_seconds_snapshot is null or rest_seconds_snapshot between 0 and 3600),
   status text not null default 'en_cours' check (status in ('en_cours','termine','ignore','remplace')),
   notes text
 );

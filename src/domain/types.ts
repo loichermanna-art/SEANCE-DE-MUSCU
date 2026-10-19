@@ -113,6 +113,7 @@ export interface ProgramExercise {
   minReps: number
   maxReps: number
   targetLoad?: number
+  targetLoadUnit?: 'kg' | 'lb'
   restSeconds: number
   notes?: string
 }
@@ -142,6 +143,13 @@ export interface WorkoutExercise {
   /** Copie du nom au moment de la séance : l'historique survit aux renommages (§6.3) */
   exerciseNameSnapshot: string
   exerciseOrder: number
+  /** Copie des cibles au démarrage; les changements ultérieurs au programme ne modifient pas l'historique. */
+  targetSetsSnapshot?: number
+  minRepsSnapshot?: number
+  maxRepsSnapshot?: number
+  targetLoadSnapshot?: number
+  targetLoadUnitSnapshot?: 'kg' | 'lb'
+  restSecondsSnapshot?: number
   status: 'en_cours' | 'termine' | 'ignore' | 'remplace'
   notes?: string
 }

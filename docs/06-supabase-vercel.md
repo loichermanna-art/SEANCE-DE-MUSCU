@@ -1,60 +1,41 @@
-# GYM OS — 06 · Mise en route Supabase + Vercel
+# GYM OS — Déploiement et données cloud
 
-## Décisions validées (Phase 1)
+## État réel (2026-10-19)
 
-| Décision | Choix retenu |
-|---|---|
-| D1 Données | **Supabase dès la V1**, avec repli local IndexedDB (aucune perte hors-ligne en salle) |
-| D2 Auth | **Sans compte en V1** (usage personnel) — voir l'avertissement sécurité ci-dessous |
-| D3 Déploiement | **Vercel** |
-| D4 Périmètre | MVP du `docs/05-roadmap.md` validé |
+- **L’application fonctionne en local-first.** IndexedDB/Dexie est la source de vérité de toutes les fonctions utilisées; les séances et bilans ne nécessitent ni compte ni réseau.
+- Le client Supabase optionnel présent dans `src/lib/supabase.ts` n'est pas connecté aux services métier. **Aucune synchronisation cloud n'est implémentée ou activée.** Ajouter les variables d'environnement aujourd'hui ne synchroniserait pas les données.
+- Le schéma Supabase n'a pas été appliqué à un projet distant. Les migrations versionnées sont des artefacts de déploiement, pas une preuve qu'une base existe ou a été modifiée.
+- Le déploiement Vercel Production n'a pas été déclenché par cette tâche. Toute mise en ligne doit passer par une Preview et une validation explicite de l'utilisateur.
 
-### ⚠️ Conséquence de « Supabase sans compte »
+## Avertissement sécurité — ne pas exposer le schéma actuel
 
-Sans authentification, l'application utilise la clé publique Supabase (`anon`).
-Les politiques RLS du fichier `supabase/schema.sql` autorisent donc ce rôle.
-C'est acceptable pour **ton usage personnel temporaire**, mais **avant toute
-ouverture à d'autres personnes**, il faudra activer Supabase Auth et basculer
-sur les politiques « owner » commentées en bas du schéma (§18.2 du cahier des
-charges : un utilisateur ne doit jamais pouvoir lire les données d'un autre).
+Le schéma de démonstration contient une politique `personal_anon_access` qui accorde au rôle public `anon` un accès complet aux tables. C'est **inadapté à une app publique** et ne garantit aucune confidentialité entre visiteurs. Ne colle pas `supabase/schema.sql` dans un projet utilisé par plusieurs personnes et ne configure pas de clés dans Vercel avant d'avoir :
 
-**La base locale IndexedDB reste la source d'écriture immédiate** : chaque série
-validée est d'abord sauvée sur l'appareil (jamais d'attente réseau en salle).
-La synchronisation vers Supabase sera branchée en Phase 7 avec une file
-d'opérations idempotentes (§15.4).
+1. choisi et testé Supabase Auth;
+2. ajouté un `owner_id` authentifié à toutes les tables personnelles;
+3. activé les politiques RLS propriétaire-par-ligne, retiré les politiques anon permissives et testé qu'un compte ne peut jamais lire/écrire les données d'un autre;
+4. implémenté puis testé une file de synchronisation idempotente, les conflits et les reprises hors-ligne;
+5. réalisé une revue sécurité indépendante.
 
-## Étape A — Créer ton projet Supabase (5 minutes, gratuit)
+La clé `service_role` ne doit jamais apparaître dans le frontend ni dans Git. La clé `anon` est publique et **n'est pas** une mesure d'autorisation.
 
-1. Va sur [supabase.com](https://supabase.com) → **New project** (nom : `gym-os`).
-2. Choisis un mot de passe de base de données (garde-le pour toi, l'app n'en a pas besoin).
-3. **Project Settings → API** : récupère `Project URL` et la clé `anon public`.
+## Lancement de l'application
 
-## Étape A′ — Connecter Supabase à GitHub (recommandé)
+```bash
+npm ci
+npm run dev
+npm test
+npm run build
+```
 
-Le schéma est versionné dans `supabase/migrations/` : une fois la connexion
-faite, Supabase applique automatiquement les migrations poussées sur GitHub.
+L'application peut être servie sur Vercel sans variables Supabase; les données restent locales à chaque navigateur/appareil. Utilise le JSON versionné depuis Profil → Mes données pour sauvegarder/restaurer ou transférer les données.
 
-1. Dans ton projet Supabase : **Project Settings → Integrations → GitHub**.
-2. **Connect** → autorise l'application GitHub Supabase sur le dépôt
-   `loichermanna-art/SEANCE-DE-MUSCU`.
-3. Sélectionne ce dépôt, la branche de production et le répertoire de travail
-   `supabase` (détecté automatiquement).
-4. La migration `20261018120000_gym_os_schema_initial.sql` crée toutes les tables.
+## Configurer Vercel quand la Preview est demandée
 
-> Alternative manuelle (sans connexion GitHub) : **SQL Editor** → colle le
-> contenu de [`supabase/schema.sql`](../supabase/schema.sql) → **Run**.
+1. Importer le dépôt GitHub avec Vite; la configuration SPA est dans `vercel.json`.
+2. Déployer en **Preview** seulement et tester chaque route, le responsive, clavier/tactile, l'installation PWA et le mode hors-ligne.
+3. Ne promouvoir en Production qu'après audit indépendant et accord explicite de l'utilisateur.
 
-## Étape B — Brancher les clés
+## Base Supabase (travail futur, désactivé)
 
-- **En local** : copie `.env.example` en `.env.local` et remplis les 2 valeurs.
-- **Sur Vercel** : Project → Settings → Environment Variables :
-  `VITE_SUPABASE_URL` et `VITE_SUPABASE_ANON_KEY` (environnements Production + Preview), puis redéploie.
-
-Ne mets **jamais** la clé `service_role` dans le frontend (§18.3).
-
-## Étape C — Déploiement Vercel
-
-Le fichier `vercel.json` est déjà configuré (build Vite, réécritures SPA).
-
-- Importe le dépôt GitHub dans Vercel (**Add New → Project**), framework **Vite** détecté automatiquement.
-- Ou demande-moi de créer le projet et le déploiement via le connecteur Vercel de cette conversation.
+`supabase/schema.sql` représente le schéma courant complet; `supabase/migrations/` conserve les migrations incrémentales. Pour appliquer une future architecture sécurisée, effectuer une revue des scripts et des politiques, puis tester sur un projet de développement jetable avant toute base réelle. Les migrations de démonstrations et les snapshots `workout_exercises` ne sont pas appliqués automatiquement.

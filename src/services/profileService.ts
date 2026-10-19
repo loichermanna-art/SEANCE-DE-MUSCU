@@ -2,6 +2,7 @@
 
 import { db, newId, nowIso } from './db'
 import { LOCAL_USER_ID, type Goal, type GoalType, type Profile, type UserPreferences } from '../domain/types'
+import { exportAllData as exportBackup } from './backupService'
 
 export async function getProfile(): Promise<Profile | undefined> {
   return db.profiles.orderBy('updatedAt').last()
@@ -60,23 +61,7 @@ export async function savePreferences(prefs: UserPreferences): Promise<void> {
   await db.userPreferences.put(prefs)
 }
 
-/** Export complet des données utilisateur en JSON (§2.2, §18.4) */
+/** Export JSON versionné complet, incluant séances, récupération, préférences et exercices personnalisés. */
 export async function exportAllData(): Promise<string> {
-  const data = {
-    exportedAt: nowIso(),
-    app: 'GYM OS',
-    profiles: await db.profiles.toArray(),
-    goals: await db.goals.toArray(),
-    programs: await db.programs.toArray(),
-    programDays: await db.programDays.toArray(),
-    programExercises: await db.programExercises.toArray(),
-    workoutSessions: await db.workoutSessions.toArray(),
-    workoutExercises: await db.workoutExercises.toArray(),
-    workoutSets: await db.workoutSets.toArray(),
-    recoveryCheckins: await db.recoveryCheckins.toArray(),
-    muscleSoreness: await db.muscleSoreness.toArray(),
-    bodyMeasurements: await db.bodyMeasurements.toArray(),
-    customExercises: (await db.exercises.toArray()).filter((e) => e.isCustom),
-  }
-  return JSON.stringify(data, null, 2)
+  return exportBackup()
 }

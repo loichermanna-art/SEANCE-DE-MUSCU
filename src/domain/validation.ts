@@ -12,7 +12,7 @@ export function validateSetInput(input: { loadValue: number; repetitions: number
   if (input.loadValue > 1000) errors.push('Cette charge semble incohérente (plus de 1000).')
   if (!Number.isInteger(input.repetitions) || input.repetitions < 0) errors.push('Les répétitions doivent être un entier supérieur ou égal à 0.')
   if (input.repetitions > 1000) errors.push('Ce nombre de répétitions semble incohérent.')
-  if (input.rir !== undefined && (input.rir < 0 || input.rir > 10)) errors.push('Le RIR doit être entre 0 et 10.')
+  if (input.rir !== undefined && (!Number.isFinite(input.rir) || input.rir < 0 || input.rir > 10)) errors.push('Le RIR doit être entre 0 et 10.')
   return { ok: errors.length === 0, errors }
 }
 

@@ -13,6 +13,7 @@ Volume(exercice) = Σ (charge × répétitions) sur les séries VALIDÉES de typ
 - Les séries d'échauffement sont exclues du volume de travail.
 - Exercices au poids du corps (charge = 0 ou inconnue) : **aucun volume affiché
   comme exact** — on affiche séries × répétitions (§8.2).
+- Les charges enregistrées en livres sont normalisées en kilogrammes pour les comparaisons; les courbes/records affichent cette unité de référence. La charge brute et son unité restent conservées dans chaque série.
 - Le volume n'est comparable qu'à exercice égal (§8.4).
 
 ## 2. Records (§8.4) — critères explicites

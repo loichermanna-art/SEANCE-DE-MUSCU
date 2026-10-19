@@ -24,7 +24,7 @@ export default function DashboardPage() {
     const doneThisWeek = sessions.filter(
       (s) => s.status === 'terminee' && s.endedAt && new Date(s.endedAt).getTime() >= weekStart,
     ).length
-    const inProgress = sessions.find((s) => s.status === 'en_cours')
+    const inProgress = sessions.find((s) => s.status === 'en_cours' || s.status === 'interrompue')
     const recent = sessions
       .filter((s) => s.status === 'terminee')
       .sort((a, b) => (b.endedAt ?? '').localeCompare(a.endedAt ?? ''))
@@ -46,8 +46,8 @@ export default function DashboardPage() {
         <Card className="mb-5 border-accent/50 bg-accent/10">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h2 className="flex items-center gap-2 font-bold"><RotateCcw size={18} /> Séance en cours : {data.inProgress.name}</h2>
-              <p className="mt-0.5 text-sm text-muted">Commencée le {data.inProgress.startedAt ? new Date(data.inProgress.startedAt).toLocaleString('fr-FR') : '—'} — aucune donnée n’est perdue.</p>
+              <h2 className="flex items-center gap-2 font-bold"><RotateCcw size={18} /> {data.inProgress.status === 'interrompue' ? 'Séance en pause :' : 'Séance en cours :'} {data.inProgress.name}</h2>
+              <p className="mt-0.5 text-sm text-muted">Commencée le {data.inProgress.startedAt ? new Date(data.inProgress.startedAt).toLocaleString('fr-FR') : '—'} — tes saisies sont conservées sur cet appareil.</p>
             </div>
             <Link to="/seance" className="gym-action rounded-xl bg-accent px-5 py-3 font-bold text-accent-ink hover:brightness-110">Reprendre ma séance</Link>
           </div>
@@ -66,8 +66,8 @@ export default function DashboardPage() {
           <h2 className="mb-1 flex items-center gap-2 font-bold"><CalendarDays size={18} /> Ta prochaine séance</h2>
           {data?.activeProgram ? (
             <>
-              <p className="text-sm text-muted">Programme actif : <strong className="text-ink">{data.activeProgram.name}</strong>. Les séances planifiées apparaîtront ici dès la gestion des programmes (Phase 3).</p>
-              <Link to="/programme" className="gym-action mt-4 inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-bold text-accent-ink hover:brightness-110"><Play size={17} /> Voir mon programme</Link>
+              <p className="text-sm text-muted">Programme actif : <strong className="text-ink">{data.activeProgram.name}</strong>. Ouvre ton programme pour démarrer directement une journée ou commence une séance libre.</p>
+              <div className="mt-4 flex flex-wrap gap-2"><Link to="/programme" className="gym-action inline-flex min-h-11 items-center gap-2 rounded-xl bg-accent px-5 py-3 font-bold text-accent-ink hover:brightness-110"><Play size={17} /> Voir mon programme</Link><Link to="/seance" className="gym-action inline-flex min-h-11 items-center gap-2 rounded-xl border border-line bg-surface2 px-5 py-3 font-semibold hover:border-accent/50"><Dumbbell size={17} /> Démarrer une séance</Link></div>
             </>
           ) : (
             <>

@@ -1,9 +1,13 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { Library, Search } from 'lucide-react'
+import { Library, Pencil, Plus, Search, Trash2 } from 'lucide-react'
 import { db } from '../services/db'
 import { Card, EmptyState, PageTitle, PhaseBadge } from '../components/ui'
 import ExerciseDemoPlayer from './ExerciseDemoPlayer'
+import { historyService, type ExerciseProgress } from '../services/historyService'
+import { exerciseService, type CustomExerciseInput } from '../services/exerciseService'
+import type { Exercise } from '../domain/types'
+import { CustomExerciseForm } from './CustomExerciseForm'
 
 const EQUIPMENT_LABELS: Record<string, string> = {
   barre: 'Barre', halteres: 'Haltères', machine: 'Machine', poulie: 'Poulie', poids_du_corps: 'Poids du corps',
@@ -12,8 +16,16 @@ const EQUIPMENT_LABELS: Record<string, string> = {
 export default function ExercisesPage() {
   const [query, setQuery] = useState('')
   const [muscle, setMuscle] = useState<string>('tous')
+  const [equipment, setEquipment] = useState<string>('tous')
   const [filtersUsed, setFiltersUsed] = useState(false)
   const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [exerciseProgress, setExerciseProgress] = useState<ExerciseProgress>()
+  const [progressLoading, setProgressLoading] = useState(false)
+  const [showCustomForm, setShowCustomForm] = useState(false)
+  const [editingCustom, setEditingCustom] = useState<Exercise | undefined>()
+  const [customBusy, setCustomBusy] = useState(false)
+  const [customNotice, setCustomNotice] = useState('')
+  const [customError, setCustomError] = useState('')
 
   const data = useLiveQuery(async () => {
     const [exercises, groups, links, demonstrations] = await Promise.all([
@@ -39,22 +51,61 @@ export default function ExercisesPage() {
   }, [data])
 
   const filtered = (data?.exercises ?? []).filter((e) => {
-    const matchesQuery = e.name.toLowerCase().includes(query.trim().toLowerCase())
+    const searchText = `${e.name} ${e.alternativeNames ?? ''}`.toLocaleLowerCase('fr')
+    const matchesQuery = searchText.includes(query.trim().toLocaleLowerCase('fr'))
     const matchesMuscle = muscle === 'tous' || (musclesOf.get(e.id) ?? []).some((m) => {
       const group = data?.groups.find((g) => g.name === m.name)
       return group?.id === muscle
     })
-    return matchesQuery && matchesMuscle
+    const matchesEquipment = equipment === 'tous' || e.equipment === equipment
+    return matchesQuery && matchesMuscle && matchesEquipment
   })
 
   const selected = data?.exercises.find((e) => e.id === selectedId)
 
+  useEffect(() => {
+    if (!selectedId) { setExerciseProgress(undefined); return }
+    let active = true
+    setProgressLoading(true)
+    void historyService.getExerciseProgress(selectedId).then(progress => { if (active) setExerciseProgress(progress) })
+      .finally(() => { if (active) setProgressLoading(false) })
+    return () => { active = false }
+  }, [selectedId])
+
+  async function saveCustom(input: CustomExerciseInput) {
+    setCustomBusy(true); setCustomError('')
+    try {
+      const savedExercise = await exerciseService.saveCustom(input)
+      setSelectedId(savedExercise.id); setEditingCustom(undefined); setShowCustomForm(false)
+      setCustomNotice(input.id ? 'Exercice personnalisé mis à jour.' : 'Exercice personnalisé créé.')
+    } catch (cause) { setCustomError(cause instanceof Error ? cause.message : 'Impossible d’enregistrer cet exercice.'); throw cause }
+    finally { setCustomBusy(false) }
+  }
+
+  async function deleteCustom(exercise: Exercise) {
+    if (!window.confirm(`Supprimer « ${exercise.name} » de ta bibliothèque ?`)) return
+    setCustomBusy(true); setCustomError(''); setCustomNotice('')
+    try {
+      await exerciseService.deleteCustom(exercise.id)
+      setSelectedId(null); setCustomNotice('Exercice supprimé. Les noms instantanés de l’historique sont conservés.')
+    } catch (cause) { setCustomError(cause instanceof Error ? cause.message : 'Impossible de supprimer cet exercice.') }
+    finally { setCustomBusy(false) }
+  }
+
+  const editingForm = editingCustom ? {
+    ...editingCustom,
+    muscles: (data?.links ?? []).filter(link => link.exerciseId === editingCustom.id).map(link => ({ muscleGroupId: link.muscleGroupId, role: link.role })),
+  } : undefined
+
   return (
     <div>
       <div className="flex flex-wrap items-center gap-3">
-        <PageTitle title="Bibliothèque d’exercices" subtitle="Recherche, filtres et fiches techniques. L’ajout d’exercices personnalisés arrive en Phase 3." />
-        <span className="mb-5 ml-auto"><PhaseBadge phase="Phase 3 — en cours" /></span>
+        <PageTitle title="Bibliothèque d’exercices" subtitle="Recherche par nom ou alias, filtres musculaires, démonstrations et fiches techniques." />
+        <div className="mb-5 ml-auto flex flex-wrap gap-2"><PhaseBadge phase="Bibliothèque" /><button onClick={() => { setShowCustomForm(true); setEditingCustom(undefined); setCustomError('') }} className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-accent px-3 text-sm font-semibold text-white"><Plus size={17} /> Créer un exercice</button></div>
       </div>
+      {customNotice && <p role="status" className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-900">{customNotice}</p>}
+      {customError && <p role="alert" className="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-800">{customError}</p>}
+      {(showCustomForm || editingCustom) && data && <div className="mb-5"><CustomExerciseForm groups={data.groups} initial={editingForm} busy={customBusy} onCancel={() => { setShowCustomForm(false); setEditingCustom(undefined); setCustomError('') }} onSave={saveCustom} /></div>}
 
       <div className="mb-4 flex flex-col gap-3 sm:flex-row">
         <label className="relative flex-1">
@@ -78,9 +129,15 @@ export default function ExercisesPage() {
             {(data?.groups ?? []).map((g) => <option key={g.id} value={g.id}>{g.name}</option>)}
           </select>
         </label>
+        <label>
+          <span className="sr-only">Filtrer par équipement</span>
+          <select value={equipment} onChange={event => { setFiltersUsed(true); setEquipment(event.target.value) }} className="w-full rounded-xl border border-line bg-surface px-3 py-3 text-sm outline-none focus:border-accent sm:w-48">
+            <option value="tous">Tous les équipements</option>{Object.entries(EQUIPMENT_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+          </select>
+        </label>
       </div>
 
-      {filtered.length === 0 ? (
+      {!data ? <Card><p role="status" className="py-6 text-sm text-muted">Chargement de la bibliothèque…</p></Card> : filtered.length === 0 ? (
         <EmptyState icon={<Library size={28} />} title="Aucun exercice trouvé" message="Essaie un autre mot-clé ou un autre groupe musculaire." />
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -119,7 +176,8 @@ export default function ExercisesPage() {
               <p className="mt-1 text-sm">{selected.commonMistakes}</p>
             </>
           ) : null}
-          <p className="mt-4 text-xs text-muted">L’historique de tes performances sur cet exercice apparaîtra ici après tes premières séances (Phase 5).</p>
+          {selected.isCustom && <div className="mt-4 flex flex-wrap gap-2 border-t border-line pt-3"><button onClick={() => { setEditingCustom(selected); setShowCustomForm(false); setCustomError('') }} className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-line px-3 text-sm font-semibold"><Pencil size={16} /> Modifier mon exercice</button><button disabled={customBusy} onClick={() => void deleteCustom(selected)} className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-red-200 px-3 text-sm font-semibold text-red-700 disabled:opacity-50"><Trash2 size={16} /> Supprimer</button></div>}
+          <section className="mt-5 border-t border-line pt-4" aria-label="Historique de l’exercice"><h3 className="text-sm font-bold uppercase tracking-wide text-muted">Performances enregistrées</h3>{progressLoading ? <p role="status" className="mt-2 text-sm text-muted">Chargement de l’historique…</p> : exerciseProgress?.points.length ? <><p className="mt-2 text-sm text-ink">Record actuel : {exerciseProgress.records.bestLoad === null ? 'aucune charge externe enregistrée' : `${new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 1 }).format(exerciseProgress.records.bestLoad)} kg`} · {exerciseProgress.records.bestReps ?? '—'} répétitions max.</p><ul className="mt-2 divide-y divide-line">{exerciseProgress.points.slice(-5).reverse().map(point => <li key={point.sessionId} className="flex flex-wrap justify-between gap-2 py-2 text-xs"><span className="font-medium text-ink">{new Date(point.date).toLocaleDateString('fr-FR')} · {point.name}</span><span className="text-muted">{point.bestLoad === null ? 'poids du corps' : `${new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 1 }).format(point.bestLoad)} kg`} · {point.workSets} séries</span></li>)}</ul></> : <p className="mt-2 text-sm text-muted">Aucune séance terminée pour cet exercice. Les données apparaîtront après avoir enregistré une séance réelle.</p>}</section>
           </Card>
         </div>
       ) : null}

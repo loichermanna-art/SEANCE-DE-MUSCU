@@ -10,15 +10,16 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
+      injectRegister: false,
       includeAssets: ['icons/icon-192.png', 'icons/icon-512.png'],
       manifest: {
         name: 'GYM OS',
         short_name: 'GYM OS',
         description: 'Planifie, exécute et analyse tes séances de musculation.',
         lang: 'fr',
-        theme_color: '#0B0D12',
-        background_color: '#0B0D12',
+        theme_color: '#f6f8fb',
+        background_color: '#f6f8fb',
         display: 'standalone',
         orientation: 'portrait',
         scope: '/',
@@ -41,5 +42,18 @@ export default defineConfig({
   preview: {
     host: '0.0.0.0',
     allowedHosts: true,
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return
+          if (/node_modules\/(react|react-dom|scheduler)\//.test(id)) return 'react-vendor'
+          if (/node_modules\/(react-router|react-router-dom|@remix-run)\//.test(id)) return 'router-vendor'
+          if (/node_modules\/(dexie|dexie-react-hooks)\//.test(id)) return 'data-vendor'
+          if (/node_modules\/lucide-react\//.test(id)) return 'icons-vendor'
+        },
+      },
+    },
   },
 })

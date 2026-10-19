@@ -1,44 +1,39 @@
 # GYM OS
 
-Application web progressive (PWA) de gestion de l'entraînement en musculation :
-planifier ses programmes, exécuter ses séances en direct, mesurer sa progression
-et adapter ses entraînements à sa récupération.
+Application web progressive de musculation pour **planifier → exécuter → mesurer → adapter**. La version actuelle est local-first : les programmes, séances, performances, bilans, profil et réglages sont enregistrés sur l'appareil avec IndexedDB/Dexie. Les fonctions essentielles marchent sans compte et sans réseau après chargement/cache PWA.
 
-> **Principe directeur :** chaque séance produit des données utiles, et chaque
-> séance suivante bénéficie de ce qui a été appris précédemment.
+## Fonctionnalités V1 présentes
 
-## État du projet
+- Bibliothèque filtrable par nom/alias et muscle, fiches d'exercice, démonstrations SVG et exercices personnalisés.
+- Programmes, jours et prescriptions d'exercices : ordre, séries, plage de répétitions, charge/unité, repos et notes.
+- Séance programmée ou libre, saisie par série, sauvegarde locale immédiate, minuteur de repos qui reste cohérent en arrière-plan, pause/reprise, annulation et bilan final.
+- Historique, records, volume et courbes basés sur les séries réellement validées; suggestions de progression explicables et jamais automatiques.
+- Bilans de récupération et conseils prudents par groupes musculaires.
+- Export JSON versionné, fusion/restauration et invite contrôlée pour les mises à jour PWA.
 
-✅ **Phase 1 — Cadrage** · ✅ **Phase 2 — Socle technique** (app PWA navigable,
-thème, persistance locale, profil fonctionnel, bibliothèque consultable,
-règles métier testées). Prochaine étape : **Phase 3 — Programmes**.
-Voir le plan complet dans [`docs/05-roadmap.md`](docs/05-roadmap.md).
+**La synchronisation Supabase n'est pas activée.** Il faut configurer un projet et valider Auth/RLS avant de synchroniser ou d'ouvrir l'application à d'autres utilisateurs. Aucun secret ni projet Supabase n'est fourni par ce dépôt.
 
-## Lancer l'application
+## Démarrage local
 
 ```bash
-npm install
-npm run dev     # développement
-npm test        # tests des règles métier (domaine)
-npm run build   # build de production + PWA
+npm ci
+npm run dev
 ```
 
-Pour brancher Supabase et déployer sur Vercel : [`docs/06-supabase-vercel.md`](docs/06-supabase-vercel.md).
+Ouvre l'adresse indiquée par Vite. Pour construire et vérifier :
+
+```bash
+npm test
+npm run build
+```
+
+Les données d'entraînement restent dans le navigateur courant. Depuis **Profil et paramètres → Mes données**, exporte régulièrement un fichier JSON; importe-le sur l'appareil cible pour migrer ou restaurer. L'option « remplacer » efface d'abord les données locales, demande confirmation et ne s'exécute que si la sauvegarde est valide.
+
+## Déploiement
+
+- Vercel : voir [`docs/06-supabase-vercel.md`](docs/06-supabase-vercel.md). Déployer une Preview avant toute décision de production.
+- Schéma Supabase et migrations : `supabase/`. Elles ne sont pas appliquées automatiquement à un projet sans configuration.
 
 ## Documentation
 
-Pour répartir le travail entre contributeurs et assistants, commencer par [`docs/00-coordination.md`](docs/00-coordination.md) et consigner les passations dans [`docs/HANDOFF.md`](docs/HANDOFF.md).
-
-| Document | Contenu |
-|---|---|
-| [`docs/01-analyse-cahier-des-charges.md`](docs/01-analyse-cahier-des-charges.md) | Compréhension du besoin, dépendances, risques |
-| [`docs/02-architecture.md`](docs/02-architecture.md) | Stack, architecture, routes, décisions à valider |
-| [`docs/03-modele-de-donnees.md`](docs/03-modele-de-donnees.md) | Entités, relations, intégrité |
-| [`docs/04-regles-metier.md`](docs/04-regles-metier.md) | Volume, records, progression double, récupération |
-| [`docs/05-roadmap.md`](docs/05-roadmap.md) | Phases de développement |
-| [`docs/07-plan-motion-interface.md`](docs/07-plan-motion-interface.md) | Proposition de motion design fonctionnel pour l'interface GYM OS (à valider) |
-
-## Stack (proposition — Phase 2)
-
-React · TypeScript · Vite · Tailwind CSS · Recharts · IndexedDB (Dexie) ·
-vite-plugin-pwa — architecture local-first, synchronisation Supabase prévue en Phase 7.
+Commencer par [`docs/00-coordination.md`](docs/00-coordination.md), la feuille de route [`docs/05-roadmap.md`](docs/05-roadmap.md) et le journal de passation [`docs/HANDOFF.md`](docs/HANDOFF.md).

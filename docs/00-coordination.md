@@ -10,14 +10,10 @@ Le projet utilise React, TypeScript et Vite. Les données locales sont gérées 
 
 ## État actuel
 
-- **UI-01 en cours :** l'utilisateur a explicitement réattribué à ChatGPT l'implémentation de la refonte visuelle pour cette tâche. Ce mandat ciblé ne remplace pas la séparation habituelle des rôles pour les autres tâches ; l'audit indépendant reste requis.
-
-- Phases 1 et 2 : terminées (cadrage et socle de l'application).
-- Phase en cours : **Phase 3 — Bibliothèque & programmes**.
-- La bibliothèque d'exercices et les tables de données des programmes existent déjà. La création et la gestion complète des programmes restent à réaliser.
-- La séance en direct (Phase 4) est le prochain grand jalon après les programmes.
-
-Voir [`05-roadmap.md`](05-roadmap.md) pour la roadmap détaillée et les critères de fin. Le chantier **DEMO-01** est prioritaire sur P3-02 jusqu’à décision contraire ; P3-02 est explicitement en pause.
+- **Mandat de finalisation reçu le 2026-10-19 :** poursuivre l'implémentation sur cette branche pour rendre le produit V1 réellement utilisable, sans attendre une nouvelle attribution pour chaque sous-tâche. Le mandat lève la pause antérieure de P3-02 et autorise l'enchaînement des tâches nécessaires au parcours complet Planifier → Exécuter → Mesurer → Adapter.
+- **État de départ vérifié :** bibliothèque, gestion des programmes/jours, profil, démonstrations, calculs de progression et récupération existent à des degrés divers; prescriptions d'exercices dans les jours, séance en direct, historique utilisable et suivi récupération restent incomplets ou des placeholders.
+- **Séquence de finalisation :** terminer Phase 3, puis Phase 4, Phase 5 et Phase 6. Ensuite contrôler la PWA/offline et l'export. Ne pas activer de synchronisation cloud sans Auth/RLS sécurisés ni clés configurées. Coach IA, nutrition et fonctions sociales restent hors MVP V1.
+- **Responsable implémentation :** Assistant ChatGPT sur `arena/aa006b12-seance-de-muscu`. L'audit indépendant et les validations réelles appareil/navigateur restent requis avant de déclarer le produit prêt à la production.
 
 ## Tâches
 
@@ -27,11 +23,14 @@ Les tâches marquées « À attribuer » ne sont prises par aucun assistant tant
 |---|---|---|---|---|
 | UI-01 | Déployer progressivement le thème clair premium et harmoniser les composants/navigation sans régression | En cours | Assistant ChatGPT (mandat explicite de l'utilisateur) | — |
 | P3-01 | Examiner l'existant lié aux programmes et proposer un découpage précis, sans modifier le code fonctionnel | Terminé | Assistant ChatGPT | — |
-| P3-02 | Implémenter la création, modification et suppression des programmes et de leurs jours | **En pause** | Assistant ChatGPT (pause demandée par l’utilisateur le 2026-10-19) | P3-01 |
-| P3-03 | Permettre d'ajouter/réordonner des exercices dans les jours, avec séries, répétitions, charge cible et repos | À faire | À attribuer | P3-02 |
-| DEMO-01 | Démonstrations d’exercices en séquences animées codées (motion design) | **En cours — implémentation autorisée le 2026-10-19** | Assistant ChatGPT — implémentation | Spécification validée |
-| P3-04 | Relier l'interface de programme aux vraies données locales, gérer les états vide/erreur/succès et ajouter des tests | À faire | À attribuer | P3-02, P3-03 |
-| P4-01 | Commencer la séance en direct à partir d'un jour de programme | À faire | À attribuer | Phase 3 terminée |
+| P3-02 | Finaliser la création, modification et suppression des programmes et de leurs jours; audit et validation | En cours — reprise autorisée le 2026-10-19 | Assistant ChatGPT | P3-01 |
+| P3-03 | Ajouter, configurer, modifier, réordonner et retirer les exercices planifiés | En cours — implémenté, audit requis | Assistant ChatGPT | P3-02 |
+| DEMO-01 | Démonstrations d’exercices en séquences animées codées (motion design) | En cours — implémenté, audit visuel/accessibilité requis | Assistant ChatGPT — implémentation | Spécification validée |
+| P3-04 | Relier l'interface de programme aux données locales et couvrir les états/tests | En cours — intégration locale implémentée, audit requis | Assistant ChatGPT | P3-02, P3-03 |
+| P4-01 | Démarrer, saisir, mettre en pause/reprendre et terminer une séance | En cours — implémenté, audit appareil requis | Assistant ChatGPT | Phase 3 |
+| P5-01 | Historique réel, fiches d'exercice et graphiques de progression | En cours — implémenté, audit requis | Assistant ChatGPT | P4-01 |
+| P6-01 | Bilans de récupération et recommandations explicables | En cours — implémenté, audit requis | Assistant ChatGPT | P4-01 |
+| P7-01 | PWA hors-ligne, sauvegarde/import; synchronisation cloud sécurisée | Partiel — local terminé, cloud bloqué sur Auth/RLS/configuration | Assistant ChatGPT | P4-01 |
 
 ### États autorisés
 

@@ -54,26 +54,22 @@ export const SEED_EXERCISES: SeedExercise[] = [
   E({ id: 'planche', name: 'Planche (gainage)', equipment: 'poids_du_corps', movementType: 'gainage', difficulty: 1, description: 'Gainage statique ventral, tenu en secondes.', instructions: 'Corps aligné tête-bassin-talons, bassin ni trop haut ni affaissé, respire calmement.', muscles: [['abdominaux', 'principal'], ['corps-entier', 'secondaire']] }),
 ]
 
-/** Insère les données de référence si la base est vide. Idempotent (§15.4). */
+/** Complète les références manquantes sans remplacer les exercices personnalisés. Idempotent (§15.4). */
 export async function seedIfEmpty(): Promise<void> {
-  const exerciseCount = await db.exercises.count()
-  if (exerciseCount > 0) {
-    await seedExerciseDemonstrations()
-    return
-  }
   const now = new Date().toISOString()
   await db.transaction('rw', [db.muscleGroups, db.exercises, db.exerciseMuscles], async () => {
     await db.muscleGroups.bulkPut(MUSCLE_GROUPS)
-    await db.exercises.bulkPut(
-      SEED_EXERCISES.map((e) => {
-        const { muscles: _muscles, ...exercise } = e
-        return { ...exercise, isCustom: false, createdAt: now }
-      }),
-    )
-    const links: ExerciseMuscle[] = SEED_EXERCISES.flatMap((e) =>
-      e.muscles.map(([muscleGroupId, role]) => ({
-        id: `${e.id}:${muscleGroupId}:${role}`,
-        exerciseId: e.id,
+    for (const seeded of SEED_EXERCISES) {
+      const existing = await db.exercises.get(seeded.id)
+      if (!existing) {
+        const { muscles: _muscles, ...exercise } = seeded
+        await db.exercises.put({ ...exercise, isCustom: false, createdAt: now })
+      }
+    }
+    const links: ExerciseMuscle[] = SEED_EXERCISES.flatMap((exercise) =>
+      exercise.muscles.map(([muscleGroupId, role]) => ({
+        id: `${exercise.id}:${muscleGroupId}:${role}`,
+        exerciseId: exercise.id,
         muscleGroupId,
         role,
       })),

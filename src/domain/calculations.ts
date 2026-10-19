@@ -9,6 +9,11 @@ function validSets(sets: WorkoutSet[]): WorkoutSet[] {
   return sets.filter((s) => s.status === 'validee')
 }
 
+/** Convert all recorded loads to kg so mixed-unit sessions remain comparable. */
+export function loadInKilograms(set: Pick<WorkoutSet, 'loadValue' | 'loadUnit'>): number {
+  return set.loadUnit === 'lb' ? set.loadValue * 0.45359237 : set.loadValue
+}
+
 /**
  * Volume de travail = Σ charge × répétitions, séries de TRAVAIL validées (§8.2).
  * Retourne `null` si aucun volume mesurable (poids du corps) : on n'affiche
@@ -18,7 +23,7 @@ export function computeVolume(sets: WorkoutSet[]): number | null {
   const work = validSets(sets).filter((s) => s.setType === 'travail')
   if (work.length === 0) return null
   if (work.every((s) => s.loadValue <= 0)) return null
-  return work.reduce((sum, s) => sum + s.loadValue * s.repetitions, 0)
+  return work.reduce((sum, s) => sum + loadInKilograms(s) * s.repetitions, 0)
 }
 
 export function computeTotalReps(sets: WorkoutSet[]): number {
@@ -48,7 +53,8 @@ export function computeExerciseRecords(setsBySession: WorkoutSet[][]): ExerciseR
     const work = validSets(sessionSets).filter((s) => s.setType === 'travail')
     totalWorkSets += work.length
     for (const s of work) {
-      if (s.loadValue > 0 && (bestLoad === null || s.loadValue > bestLoad)) bestLoad = s.loadValue
+      const kilograms = loadInKilograms(s)
+      if (kilograms > 0 && (bestLoad === null || kilograms > bestLoad)) bestLoad = kilograms
       if (bestReps === null || s.repetitions > bestReps) bestReps = s.repetitions
     }
     const v = computeVolume(sessionSets)

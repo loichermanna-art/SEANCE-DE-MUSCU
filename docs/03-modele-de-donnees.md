@@ -26,9 +26,9 @@ Trois niveaux **strictement séparés**, pour ne jamais réécrire l'histoire :
 | `exercise_demonstrations` | Démonstration codée d’un exercice | `exercise_id`, `variant_key`, `animation_key`, `animation_version`, `duration_ms`, `view`, `status`, libellé accessible |
 | `programs` | Programmes (§6.1) | `name`, `objective`, `status` (actif/pausé/archivé) |
 | `program_days` | Jours/blocs d'un programme | `name`, `day_order`, `scheduled_weekday` (facultatif) |
-| `program_exercises` | Exercices prévus par jour | `target_sets`, `min_reps`, `max_reps`, `target_load`, `rest_seconds` |
+| `program_exercises` | Exercices prévus par jour | `target_sets`, `min_reps`, `max_reps`, `target_load`, `target_load_unit`, `rest_seconds` |
 | `workout_sessions` | Séance réelle (§6.2) | `status` : planifiée/en_cours/terminée/interrompue/annulée ; `started_at`, `ended_at`, `overall_effort` |
-| `workout_exercises` | Exercice dans une séance | `exercise_name_snapshot`, `exercise_order`, `status` |
+| `workout_exercises` | Exercice dans une séance | snapshot nom, ordre, cibles, unité de charge et repos; `status` |
 | `workout_sets` | Série réalisée (§7.3) | `set_number`, `set_type` (échauffement/travail), `load_value`, `repetitions`, `rir` (facult.), `status` |
 | `recovery_checkins` | Bilan récupération (§9.2) | `energy_level`, `sleep_duration`, `sleep_quality`, `general_fatigue` |
 | `muscle_soreness` | Courbatures par muscle (§9.3) | `severity` 0–4, `pain_type` (courbature/douleur inhabituelle) |

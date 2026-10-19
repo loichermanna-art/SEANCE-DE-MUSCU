@@ -34,6 +34,9 @@ describe('computeVolume (§8.2)', () => {
     ]
     expect(computeVolume(sets)).toBe(200)
   })
+  it('convertit les livres en kilogrammes avant de comparer les volumes', () => {
+    expect(computeVolume([set({ loadValue: 100, loadUnit: 'lb', repetitions: 10 })])).toBeCloseTo(453.59237)
+  })
   it('retourne null au poids du corps (pas de volume « exact » inventé)', () => {
     expect(computeVolume([set({ loadValue: 0, repetitions: 15 })])).toBeNull()
   })

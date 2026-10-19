@@ -44,7 +44,7 @@ function Figure({ animationKey, stage, motionEnabled }: { animationKey: string; 
   const pose = isPlank ? 'translate(0 0)' : isCrunch ? (stage === 1 ? 'rotate(-22 126 103)' : 'rotate(0 126 103)') : isPull ? (stage === 1 ? 'translate(0 -15)' : 'translate(0 0)') : isSquat ? (stage === 1 ? 'translate(0 16) rotate(8 120 110)' : 'translate(0 0)') : isPress ? (stage === 1 ? 'translate(0 -13)' : 'translate(0 0)') : isRaise ? (stage === 1 ? 'rotate(-24 123 92)' : 'rotate(0 123 92)') : isCurl ? (stage === 1 ? 'rotate(-28 130 106)' : 'rotate(0 130 106)') : isRow ? (stage === 1 ? 'rotate(-12 126 112)' : 'rotate(0 126 112)') : 'translate(0 0)'
   const body = isPlank || isCrunch
   return (
-    <svg viewBox="0 0 260 190" role="img" aria-label="Illustration vectorielle simplifiée de la posture" className="h-auto w-full max-w-md" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 260 190" aria-hidden="true" focusable="false" className="h-auto w-full max-w-md" xmlns="http://www.w3.org/2000/svg">
       <rect x="8" y="8" width="244" height="174" rx="18" fill="#f4f7fb" />
       <path d="M20 156 H240" stroke="#d1dbe8" strokeWidth="2" />
       {(EQUIPMENT[animationKey] === 'bar' || EQUIPMENT[animationKey] === 'dumbbells') && !body ? <g stroke="#52647c" strokeWidth="4" strokeLinecap="round"><path d={isPress ? 'M72 48 H190' : isPull ? 'M68 38 H192' : 'M67 63 H193'} /><path d={isPress ? 'M80 40 V56 M182 40 V56' : isPull ? 'M78 30 V46 M182 30 V46' : 'M78 55 V71 M182 55 V71'} /></g> : null}

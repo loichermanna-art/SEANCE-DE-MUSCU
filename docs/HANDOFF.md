@@ -1,3 +1,18 @@
+### 2026-10-19 — DEMO-01 — Spécification des démonstrations animées
+
+- **État :** spécification déposée, validation utilisateur attendue. Aucun code fonctionnel modifié pour DEMO-01.
+- **Branche :** `arena/aa006b12-seance-de-muscu` ; `main` intacte.
+- **Spécification :** [`docs/specification-demonstrations-exercices-motion.md`](https://github.com/loichermanna-art/SEANCE-DE-MUSCU/blob/arena/aa006b12-seance-de-muscu/docs/specification-demonstrations-exercices-motion.md).
+- **Commit de création de la spécification :** `64b04de7e5aa727d9162cce33cf23ae76fd03492`.
+- **P3-02 :** mise en pause à la demande de l’utilisateur le 2026-10-19 ; ne pas reprendre sans instruction explicite.
+- **Modèle examiné :** `src/domain/types.ts`, `src/services/db.ts`, `src/services/seed.ts`, `src/features/ExercisesPage.tsx`, `supabase/schema.sql`, `docs/03-modele-de-donnees.md`, `docs/07-plan-motion-interface.md`.
+- **Décisions proposées :** table `exercise_demonstrations` distincte, références à des animations SVG codées et enregistrées dans une liste blanche, 14 exercices de référence pour la V1, lecteur d’abord dans la fiche de la bibliothèque, contrôles explicites, mode statique sous `prefers-reduced-motion: reduce`, pas de ressource externe nécessaire.
+- **Alignement données :** Dexie garde les propriétés camelCase et SQL les colonnes snake_case, avec mapping explicite dans la future synchro ; ajouter une migration Dexie et une migration Supabase sans modifier les données historiques.
+- **Tests :** aucun test exécuté pour cette tâche, car aucun code applicatif n’a été modifié. La validation de la spécification doit précéder toute implémentation.
+- **Prochaine action :** l’utilisateur valide ou corrige les 7 décisions du §12 de la spécification. Après validation explicite, attribuer l’implémentation DEMO-01 ; conserver P3-02 en pause jusqu’à instruction contraire.
+
+---
+
 ### 2026-10-19 — Nouvelle priorité — Démonstrations d’exercices en motion design
 
 - **Demande utilisateur :** afficher dans l’application de courtes séquences animées qui montrent l’exécution des exercices; l’utilisateur a précisé vouloir des vidéos créées avec du code en motion design.

@@ -9,10 +9,11 @@
   - `src/features/ProgramsPage.tsx` — la création ouvre désormais le détail du programme; piège de focus et restitution au déclencheur des dialogues; erreurs de stockage affichées dans le dialogue; filtres adaptatifs avec action « Afficher tous »; cibles d'interaction des commandes de jours de 44 × 44 px.
   - `package.json` / `package-lock.json` — ajout de `fake-indexeddb` uniquement comme dépendance de développement pour tester Dexie dans Vitest.
 - **Vérifications locales exactes :** `npm ci && npm test && npm run build && git diff --check` — réussi. `npm test` : 2 fichiers, 24 tests réussis (16 calculs, 8 tests programmes/jours). `npm run build` : réussi; avertissement existant de chunk JS à 710,68 kB (>500 kB). `npm ci` signale 3 vulnérabilités dans l'arbre de dépendances (1 modérée, 2 critiques), sans correction automatique appliquée.
-- **CI antérieure :** les runs `39243787461` et `39243769826` étaient tous deux en succès sur les commits `baff706` et `288b8c4`. Le nouveau commit applicatif doit encore être publié pour déclencher sa CI.
+- **CI :** run `39245857951` réussi après publication, déclenché sur `eea49e3` (contenant le commit applicatif `2d0bfe6`) : installation, tests et build réussis. GitHub signale uniquement les annotations de migration de Node 20 vers Node 24 pour les actions et le changement prochain de runner Ubuntu; aucun échec de tâche.
+- **CI antérieure :** les runs `39243787461` et `39243769826` étaient également en succès sur `baff706` et `288b8c4`.
 - **État :** P3-02 reste **En cours**, non clôturée. Aucun parcours interactif navigateur desktop/mobile ni vérification réelle au clavier / avec mouvement réduit n'a été exécuté.
 - **Point ouvert pour l'audit indépendant :** la spécification permet de renommer un jour lié à une séance. Vérifier l'impact d'affichage historique, car le modèle ne contient pas de snapshot du nom du jour; aucune donnée de séance n'est modifiée par le service.
-- **Prochaine action :** publier les commits sur la branche, vérifier la CI du nouveau commit, puis transmettre ce commit à l'auditeur indépendant. Ne pas démarrer P3-03 avant validation de P3-02.
+- **Prochaine action :** transmettre le commit applicatif `2d0bfe6` et son résultat CI à l'auditeur indépendant. Ne pas démarrer P3-03 avant validation de P3-02.
 
 ---
 

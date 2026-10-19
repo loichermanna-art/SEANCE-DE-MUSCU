@@ -1,8 +1,8 @@
 # GYM OS — 03 · Modèle de données
 
-Source : §17 du cahier des charges. Le même modèle sert pour IndexedDB (V1 locale)
-et pour PostgreSQL/Supabase (synchronisation ultérieure) : les noms de tables et
-de champs sont identiques des deux côtés pour éviter toute conversion.
+Source : §17 du cahier des charges. Le modèle métier est partagé entre IndexedDB (V1 locale) et PostgreSQL/Supabase.
+Les types TypeScript et Dexie utilisent le camelCase, tandis que PostgreSQL utilise
+le snake_case ; la future synchronisation doit appliquer un mapping explicite.
 
 ## 1. Principe structurant (§6.3, §17)
 

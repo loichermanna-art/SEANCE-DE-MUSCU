@@ -6,8 +6,8 @@
 - **Implémentation ajoutée :** modèle `ExerciseDemonstration`, catalogue fermé de 14 clés d’animation originales, seed idempotent, migration Dexie v1→v2, lecteur SVG à étapes dans les fiches de bibliothèque, contrôles lecture/pause/rejouer/vitesse/étapes, respect de `prefers-reduced-motion`, arrêt lorsque la page est masquée, migration SQL additive et miroir du schéma Supabase.
 - **Tests ajoutés :** `src/domain/exerciseDemonstrations.test.ts` vérifie les 14 entrées, l’unicité et les clés d’animation autorisées.
 - **Fichiers applicatifs/documentaires :** `src/domain/types.ts`, `src/domain/exerciseDemonstrations.ts`, `src/domain/exerciseDemonstrations.test.ts`, `src/services/db.ts`, `src/services/seed.ts`, `src/features/ExerciseDemoPlayer.tsx`, `src/features/ExercisesPage.tsx`, `supabase/schema.sql`, `supabase/migrations/20261019120000_exercise_demonstrations.sql`, `docs/03-modele-de-donnees.md`, ce journal et `docs/00-coordination.md`.
-- **Vérifications :** non exécutées à ce stade. Une tentative de clone local a échoué car l’environnement ne résout pas `github.com`; ne pas déclarer `npm test` ni `npm run build` réussis avant résultat CI ou exécution réelle.
-- **Prochaine action :** vérifier statiquement les fichiers et le statut CI du commit final ; corriger tout échec. L’audit indépendant reste requis. P3-02 reste en pause et `main` ne doit pas être modifiée.
+- **Vérifications CI :** run GitHub Actions `39249799226` sur le commit `8ea0ec85146b8b6e2f220b67fb515b260ad3b0d4` — **réussi** pour installation, `npm test` et `npm run build`. Sur le commit suivant `0337c35ffaa572ffe0e1e55a16ef170fecbb9c5a`, les tests sont réussis et la compilation est encore en cours au moment de cette entrée. Une tentative de clone local a échoué car l’environnement ne résout pas `github.com`; aucune exécution locale n’est revendiquée.
+- **Prochaine action :** confirmer la CI sur le commit final après cette mise à jour documentaire ; corriger tout échec. L’audit indépendant reste requis. P3-02 reste en pause et `main` ne doit pas être modifiée.
 
 ---
 

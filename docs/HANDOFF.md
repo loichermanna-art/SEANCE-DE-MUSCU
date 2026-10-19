@@ -1,3 +1,19 @@
+### 2026-10-19 — DEMO-01 — Correctifs après audit indépendant
+
+- **Branche / commit applicatif :** `arena/aa006b12-seance-de-muscu`, `aa837bbca1197405c47759dc306920fedba8b1f8`. `main` inchangée; P3-02 reste en pause.
+- **Constats traités :**
+  - `src/features/ExerciseDemoPlayer.tsx` remplace les rotations/translations globales par poses articulées propres aux 14 clés : genoux fléchis et pieds fixés au squat; charnière de hanche au RDL; tronc fixe/barre tirée au rowing; mains ancrées à la barre de traction; câble/poulie et barre mobiles au tirage vertical; barre et haltères rattachés aux mains au développé couché/incliné et développé militaire; haltères reliés aux poignets sur les élévations; trajectoires dédiées aux curls, presses, hip thrust et crunch. L’incliné a un banc incliné et une perspective trois-quarts; l’élévation latérale utilise une pose de face.
+  - Les annonces vocales incluent maintenant le nom de l’étape. La planche reste une pose statique sans commandes de lecture/vitesse/rejeu. En mouvement réduit, les commandes de lecture sont remplacées par la sélection manuelle des poses.
+  - `durationMs` pilote la durée des trois phases et le rejeu repart du départ en lecture. La lecture se met en pause à la fin, lors d’une pause utilisateur, d’un changement d’exercice ou quand la page est masquée.
+  - `view` est harmonisé sur `side`, `front`, `three_quarter`, `static`; `durationMs=0` est réservé au statique, les mouvements animés durent 1–12 s. Le seed monte les définitions intégrées à `animationVersion=2` sans écraser les variantes locales ni leur statut de publication.
+  - Migration Supabase additive `20261019130000_exercise_demonstration_metadata_alignment.sql`, schéma miroir et spécification clarifiés; migration Dexie v1→v2 maintenant exercée par un test de migration.
+- **Tests ajoutés :** tests de rendu/commandes du lecteur (lecture, pause, fin, rejeu, vitesse, sélection d’étape, changement de préférence, visibilité, planche statique et géométrie d’articulations), tests de rafraîchissement du seed et migration Dexie.
+- **Vérifications locales exactes :** `npm ci && npm test && npm run build && git diff --check` — réussi sur le code avant commit. 6 fichiers de tests, 38 tests réussis. Build TypeScript/Vite/PWA réussi; chunk JS de 733,57 kB (>500 kB). `npm ci` signale 3 vulnérabilités (1 modérée, 2 critiques) et une dépréciation `glob`; aucun correctif automatique appliqué.
+- **Limites restantes :** le SQL n’a pas été appliqué à un projet Supabase; aucun contrôle navigateur visuel réel, clavier/tactile, téléphone/ordinateur ou lecteur d’écran n’a été fait par l’implémenteur. Les scènes restent stylisées : la fidélité finale des 14 mouvements doit être revue à nouveau par l’auditeur indépendant; ne pas marquer DEMO-01 acceptée sur la seule base des tests.
+- **Prochaine action :** publier ce commit sur la branche, vérifier sa CI, puis demander à l’auditeur indépendant une relecture ciblée des 14 scènes et la matrice navigateur/accessibilité. DEMO-01 reste **En cours** jusqu’à cette revalidation.
+
+---
+
 ### 2026-10-19 — DEMO-01 — Audit indépendant du commit `f5537238dd5bfba9330286ea2811b52a96d51dd1`
 
 - **Périmètre et méthode :** revue statique indépendante de la spécification validée (`docs/specification-demonstrations-exercices-motion.md`) et des fichiers de code présents au SHA `f5537238dd5bfba9330286ea2811b52a96d51dd1`. Aucun fichier applicatif, SQL, configuration ou test n’a été modifié dans le cadre de cet audit. L’entrée présente a été ajoutée à la documentation seulement.

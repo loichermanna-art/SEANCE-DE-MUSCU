@@ -31,7 +31,7 @@ export function buildDemonstrationRows(now = new Date().toISOString()): Exercise
     durationMs: item.animationKey === 'plank' ? 0 : 3200,
     view: item.view,
     accessibilityLabel: item.label,
-    status: 'publiee',
+    status: 'publiee' as const,
     updatedAt: now,
   }))
 }

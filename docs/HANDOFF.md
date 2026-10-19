@@ -1,3 +1,15 @@
+### 2026-10-19 — DEMO-01 — Synchronisation et vérifications de l’implémentation initiale
+
+- **Branche / commit vérifié :** `arena/aa006b12-seance-de-muscu`, `f5537238dd5bfba9330286ea2811b52a96d51dd1`. Synchronisation locale effectuée en fast-forward depuis `b9d39c9`; `main` n’a pas été modifiée.
+- **CI finale vérifiée :** run `39249934726` (`https://github.com/loichermanna-art/SEANCE-DE-MUSCU/actions/runs/39249934726`) sur ce SHA — terminé avec conclusion `success`.
+- **Vérifications locales de pré-livraison :** `npm ci && npm test && npm run build` — réussi; 3 fichiers de tests, 26 tests réussis. Build TypeScript/Vite/PWA réussi.
+- **Avertissements locaux :** npm signale 3 vulnérabilités dans l’arbre de dépendances (1 modérée, 2 critiques) et un avertissement de dépréciation `glob`; le chunk JavaScript produit pèse 725,42 kB (>500 kB). Aucun `npm audit fix` n’a été exécuté.
+- **Audit visuel/accessibilité :** aucun test navigateur réel (ordinateur/téléphone), lecteur d’écran ou vérification interactive du clavier n’a été exécuté par cette passation. DEMO-01 reste **En cours** jusqu’à l’audit indépendant et aux validations requises. P3-02 reste en pause.
+- **Sauvegarde workspace :** les modifications locales antérieures à la synchronisation ont été préservées dans `stash@{0}` sous le message `safety snapshot before syncing DEMO-01 remote branch`; ce stash n’a pas été réappliqué et ne doit pas l’être sans inspection, car le fast-forward inclut déjà plusieurs des mêmes fichiers.
+- **Prochaine action :** transmettre le commit final à l’auditeur indépendant pour vérifier la fidélité des mouvements des 14 démonstrations, commandes tactiles/clavier, mouvement réduit et rendu responsive. Ne pas modifier `main`.
+
+---
+
 ### 2026-10-19 — DEMO-01 — Implémentation initiale
 
 - **Mandat :** validation finale explicite reçue le 2026-10-19. Modèle en table, 14 exercices, lecteur dans la bibliothèque seulement, contrôles complets, mouvement réduit statique, animations originales sans ressources externes. P3-02 reste en pause.

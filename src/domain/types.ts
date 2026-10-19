@@ -66,6 +66,22 @@ export interface Exercise {
   createdAt: string
 }
 
+export type DemonstrationStatus = 'publiee' | 'brouillon'
+
+export interface ExerciseDemonstration {
+  id: string
+  exerciseId: string
+  variantKey: string
+  /** Clé résolue par une liste blanche locale, jamais du code exécutable. */
+  animationKey: string
+  animationVersion: number
+  durationMs: number
+  view: 'side' | 'front' | 'three-quarter'
+  accessibilityLabel: string
+  status: DemonstrationStatus
+  updatedAt: string
+}
+
 export type ProgramStatus = 'actif' | 'pause' | 'archive'
 
 export interface Program {

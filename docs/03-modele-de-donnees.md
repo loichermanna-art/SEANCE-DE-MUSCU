@@ -23,6 +23,7 @@ Trois niveaux **strictement séparés**, pour ne jamais réécrire l'histoire :
 | `exercises` | Bibliothèque (§5.2) | `name`, `equipment`, `movement_type`, `difficulty`, `is_custom`, consignes |
 | `muscle_groups` | Groupes musculaires (§5.3) | `name` — 12 groupes initiaux fournis par l'application |
 | `exercise_muscles` | Association N-N | `exercise_id`, `muscle_group_id`, `role` (principal/secondaire) |
+| `exercise_demonstrations` | Démonstration codée d’un exercice | `exercise_id`, `variant_key`, `animation_key`, `animation_version`, `status`, libellé accessible |
 | `programs` | Programmes (§6.1) | `name`, `objective`, `status` (actif/pausé/archivé) |
 | `program_days` | Jours/blocs d'un programme | `name`, `day_order`, `scheduled_weekday` (facultatif) |
 | `program_exercises` | Exercices prévus par jour | `target_sets`, `min_reps`, `max_reps`, `target_load`, `rest_seconds` |
@@ -54,3 +55,14 @@ Trois niveaux **strictement séparés**, pour ne jamais réécrire l'histoire :
   données utilisateur (§16.4). L'utilisateur peut ajouter ses exercices (§5.4).
 - **Aucune donnée de performance fictive** : les graphiques restent vides tant que
   l'utilisateur n'a rien enregistré (principe n°4, §8.3).
+
+
+## 5. Démonstrations d’exercices (DEMO-01)
+
+La table `exercise_demonstrations` relie une démonstration à `exercises.id` (suppression en cascade), avec une variante unique par couple `exercise_id + variant_key`. Elle contient la clé d’une animation intégrée au code, sa version, sa durée indicative, sa vue, son libellé accessible, son statut (`publiee` / `brouillon`) et sa date de mise à jour. Une clé provenant de la base est toujours validée par une liste blanche : aucune chaîne en base n’est exécutée comme du code et aucune URL distante n’est chargée.
+
+- **Dexie :** table `exerciseDemonstrations`, index composé unique `[exerciseId+variantKey]`, migration de la version 1 à 2. Les propriétés restent en camelCase côté TypeScript.
+- **Supabase :** `public.exercise_demonstrations`, colonnes snake_case et migration additive `supabase/migrations/20261019120000_exercise_demonstrations.sql`.
+- **Contenu de référence :** 14 exercices de la bibliothèque sont fournis avec leurs animations originales. Le seed ajoute uniquement les entrées manquantes et ne remplace pas les variantes déjà présentes.
+- **Historique :** `program_exercises` et `workout_exercises` ne stockent pas de copie de l’animation ; ils conservent leur relation existante via `exercise_id`. Si une séance historique n’a plus d’`exercise_id`, le snapshot textuel reste disponible sans lecteur.
+- **Accessibilité :** la fiche affiche les consignes textuelles avec le lecteur. Sous `prefers-reduced-motion: reduce`, la lecture animée est désactivée et les étapes restent sélectionnables manuellement.

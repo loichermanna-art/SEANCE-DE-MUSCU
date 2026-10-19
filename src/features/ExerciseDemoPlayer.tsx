@@ -29,7 +29,7 @@ const PHASE_TEXT: Record<string, string[]> = {
   plank: ['Coudes sous les épaules.', 'Garder le corps aligné.', 'Maintenir la position et respirer.'],
 }
 
-function Figure({ animationKey, stage }: { animationKey: string; stage: Stage }) {
+function Figure({ animationKey, stage, motionEnabled }: { animationKey: string; stage: Stage; motionEnabled: boolean }) {
   const isPlank = animationKey === 'plank'
   const isCrunch = animationKey === 'crunch'
   const isPull = animationKey === 'pull-up'
@@ -47,7 +47,7 @@ function Figure({ animationKey, stage }: { animationKey: string; stage: Stage })
       {(EQUIPMENT[animationKey] === 'bar' || EQUIPMENT[animationKey] === 'dumbbells') && !body ? <g stroke="#52647c" strokeWidth="4" strokeLinecap="round"><path d={isPress ? 'M72 48 H190' : isPull ? 'M68 38 H192' : 'M67 63 H193'} /><path d={isPress ? 'M80 40 V56 M182 40 V56' : isPull ? 'M78 30 V46 M182 30 V46' : 'M78 55 V71 M182 55 V71'} /></g> : null}
       {EQUIPMENT[animationKey] === 'mat' ? <path d="M25 158 H235" stroke="#91a7c4" strokeWidth="6" strokeLinecap="round" /> : null}
       {EQUIPMENT[animationKey] === 'machine' ? <g stroke="#8b9bb0" strokeWidth="6" strokeLinecap="round"><path d="M178 70 L218 153 H182" fill="none" /><path d="M185 83 L226 83" /></g> : null}
-      <g transform={pose} stroke="#245fe5" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" fill="none">
+      <g transform={pose} style={{ transition: motionEnabled ? "transform 500ms ease-in-out" : "none" }} stroke="#245fe5" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" fill="none">
         {body ? <><path d="M74 139 L128 126 L173 146" /><path d="M128 126 L117 147" /><path d="M128 126 L143 147" /><circle cx="61" cy="139" r="10" fill="#e8b28a" stroke="none" /></> :
           <><circle cx="126" cy="57" r="11" fill="#e8b28a" stroke="none" /><path d="M126 70 L126 108" /><path d="M126 80 L97 96 L83 76" /><path d={isRaise && stage === 1 ? 'M126 80 L95 56 L84 42' : isPress && stage === 1 ? 'M126 80 L103 52 L101 28' : isPull && stage === 1 ? 'M126 80 L107 54 L107 38' : 'M126 80 L104 91 L92 102'} /><path d={isSquat && stage === 1 ? 'M126 108 L104 126 L89 151' : 'M126 108 L115 135 L111 153'} /><path d={isSquat && stage === 1 ? 'M126 108 L148 123 L162 149' : 'M126 108 L143 135 L151 153'} /><path d={isPress && stage === 1 ? 'M126 80 L145 51 L145 26' : isPull && stage === 1 ? 'M126 80 L148 54 L148 38' : isRaise && stage === 1 ? 'M126 80 L157 56 L169 42' : isCurl && stage === 1 ? 'M126 80 L148 91 L151 71' : 'M126 80 L147 91 L159 102'} /></>}
       </g>
@@ -100,7 +100,7 @@ export default function ExerciseDemoPlayer({ demonstration }: { demonstration: E
         <div><p className="text-xs font-semibold uppercase tracking-wide text-accent">Démonstration guidée</p><h3 className="mt-1 font-semibold">Mouvement en 3 étapes</h3></div>
         <span className="rounded-full bg-surface2 px-2.5 py-1 text-xs text-muted">{reducedMotion ? 'Mode statique' : 'Animation vectorielle'}</span>
       </div>
-      <div className="mt-3 flex justify-center"><Figure animationKey={allowed ? demonstration.animationKey : 'plank'} stage={stage} /></div>
+      <div className="mt-3 flex justify-center"><Figure animationKey={allowed ? demonstration.animationKey : 'plank'} stage={stage} motionEnabled={!reducedMotion} /></div>
       <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-muted" aria-live="polite">{phases[stage]}</p>
       <div className="mt-4 flex flex-wrap gap-2">
         <button type="button" disabled={reducedMotion || !allowed || demonstration.animationKey === 'plank'} onClick={() => setPlaying((v) => !v)} className="gym-action inline-flex min-h-11 items-center gap-2 rounded-xl bg-accent px-4 py-2 text-sm font-semibold text-accent-ink disabled:cursor-not-allowed disabled:opacity-50" aria-pressed={playing}>

@@ -1,3 +1,16 @@
+### 2026-10-19 — Finalisation V1 — workflows local-first
+
+- **Branche / commit applicatif :** `arena/aa006b12-seance-de-muscu`, `65835bf72223db12919eee9ddfcad90a7c25497f`. Publié sur cette branche uniquement; `main` n’a pas été modifiée.
+- **Périmètre livré :** parcours de gestion des exercices et exercices personnalisés, exercices planifiés dans les jours de programme, séances actives et minuteur tolérant les erreurs de stockage, historique/progression, récupération, sauvegarde JSON versionnée (import fusion ou remplacement), seed local idempotent et complétion d’une bibliothèque partielle. Les services sont raccordés à Dexie/IndexedDB; aucune synchronisation cloud n’est revendiquée.
+- **PWA et interface :** le navigateur propose les mises à jour plutôt que de recharger automatiquement, avec avertissement pendant une séance; couleurs du thème alignées sur `#f6f8fb`. `prefers-reduced-motion` reste pris en compte. Les changements de dépendances mettent Vitest à `4.1.12` et ajoutent `@testing-library/dom`.
+- **Vérifications locales :** après `npm ci`, `npm test` — **15 fichiers, 65 tests réussis**; `npm run build` — réussi; `npm audit --audit-level=moderate` — **0 vulnérabilité**; `git diff --cached --check` — réussi après correction d’un espace final dans la spécification P4.
+- **CI :** run GitHub Actions [`39293346064`](https://github.com/loichermanna-art/SEANCE-DE-MUSCU/actions/runs/39293346064) — **success**, installation des dépendances, tests et build réussis. Annotations informatives GitHub : actions utilisant Node 20 migrées vers Node 24 et évolution prochaine du runner `ubuntu-latest`.
+- **Preview :** Vite répond HTTP **200** sur le port 5173. Ce contrôle HTTP ne constitue pas une revue visuelle ou d’accessibilité dans un navigateur.
+- **Limites / suites :** UI-01 et DEMO-01 restent à valider par contrôle visuel réel responsive, clavier/tactile et lecteur d’écran; respecter également le contrôle `prefers-reduced-motion`. Aucune migration n’a été appliquée à un projet Supabase et Auth/RLS/sync restent à configurer et auditer avant toute mise en ligne publique. Aucun déploiement ni promotion en production n’a été effectué.
+- **État Git :** les changements applicatifs ont été commités et poussés. La mise à jour de ce handoff doit être commitée et poussée ensuite sur la même branche.
+
+---
+
 ### 2026-10-19 — DEMO-01 — Correctifs après audit indépendant
 
 - **Branche / commit applicatif :** `arena/aa006b12-seance-de-muscu`, `aa837bbca1197405c47759dc306920fedba8b1f8`. `main` inchangée; P3-02 reste en pause.

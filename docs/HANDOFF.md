@@ -1,10 +1,27 @@
-### 2026-10-19 — P3-02 — Poursuite du développement et CI
+### 2026-10-19 — P3-02 — Durcissement et vérifications préalables
 
-- **Demande utilisateur :** poursuivre le développement concret de l'application, et non s'arrêter au compte rendu d'audit.
+- **Responsable / branche :** implémentation sur `arena/aa006b12-seance-de-muscu` ; `main` inchangée.
+- **Commit applicatif de référence :** `2d0bfe63d4dea2cb17be45bab273f6f9770daf94`.
+- **Périmètre :** poursuite de P3-02 selon la spécification validée ; P3-03 n'a pas commencé.
+- **Modifications :**
+  - `src/services/programService.ts` — garde-fous service pour les programmes archivés et transitions de statut; opérations transactionnelles pour la modification des jours, ordre contigu lors de l'ajout, déplacement et suppression, refus de supprimer un programme/jour référencé par l'historique.
+  - `src/services/programService.test.ts` — tests Dexie réels en mémoire avec la dépendance de test `fake-indexeddb`; couverture CRUD, ordre, statut archivé/restauration, suppression en cascade et protection de l'historique.
+  - `src/features/ProgramsPage.tsx` — la création ouvre désormais le détail du programme; piège de focus et restitution au déclencheur des dialogues; erreurs de stockage affichées dans le dialogue; filtres adaptatifs avec action « Afficher tous »; cibles d'interaction des commandes de jours de 44 × 44 px.
+  - `package.json` / `package-lock.json` — ajout de `fake-indexeddb` uniquement comme dépendance de développement pour tester Dexie dans Vitest.
+- **Vérifications locales exactes :** `npm ci && npm test && npm run build && git diff --check` — réussi. `npm test` : 2 fichiers, 24 tests réussis (16 calculs, 8 tests programmes/jours). `npm run build` : réussi; avertissement existant de chunk JS à 710,68 kB (>500 kB). `npm ci` signale 3 vulnérabilités dans l'arbre de dépendances (1 modérée, 2 critiques), sans correction automatique appliquée.
+- **CI antérieure :** les runs `39243787461` et `39243769826` étaient tous deux en succès sur les commits `baff706` et `288b8c4`. Le nouveau commit applicatif doit encore être publié pour déclencher sa CI.
+- **État :** P3-02 reste **En cours**, non clôturée. Aucun parcours interactif navigateur desktop/mobile ni vérification réelle au clavier / avec mouvement réduit n'a été exécuté.
+- **Point ouvert pour l'audit indépendant :** la spécification permet de renommer un jour lié à une séance. Vérifier l'impact d'affichage historique, car le modèle ne contient pas de snapshot du nom du jour; aucune donnée de séance n'est modifiée par le service.
+- **Prochaine action :** publier les commits sur la branche, vérifier la CI du nouveau commit, puis transmettre ce commit à l'auditeur indépendant. Ne pas démarrer P3-03 avant validation de P3-02.
+
+---
+
+### 2026-10-19 — P3-02 — Poursuite du développement et CI (entrée historique)
+
 - **Action ajoutée :** `.github/workflows/ci.yml` — pipeline GitHub Actions sur les push et pull requests de `main` et des branches `arena/**`, avec `npm ci`, `npm test` et `npm run build`.
 - **Commit workflow :** `288b8c43089a83c24afcc31f03a0e2ddecf5a3b4`.
-- **État d'exécution :** aucune exécution GitHub Actions visible au moment de cette vérification ; les tests et le build ne sont donc toujours pas déclarés réussis. Il faudra vérifier si le mode de commit déclenche les workflows, puis exécuter manuellement ou via un push autorisé si nécessaire.
-- **Suite immédiate :** poursuivre les améliorations P3-02 et vérifier le pipeline avant d'ouvrir P3-03. Ne pas modifier `main` et ne pas déclarer P3-02 terminé avant les vérifications requises.
+- **Correction à la note initiale :** l'affirmation « aucune exécution visible » ci-dessous était valable au moment de sa rédaction, mais les runs `39243787461` et `39243769826` ont depuis été confirmés en succès pour les commits correspondants. La CI du nouveau commit applicatif reste à vérifier après publication.
+- **État :** P3-02 reste en cours; ne pas modifier `main` ni démarrer P3-03 avant audit et validation.
 
 ---
 

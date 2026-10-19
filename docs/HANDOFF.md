@@ -1,3 +1,13 @@
+### 2026-10-19 — P3-02 — Poursuite du développement et CI
+
+- **Demande utilisateur :** poursuivre le développement concret de l'application, et non s'arrêter au compte rendu d'audit.
+- **Action ajoutée :** `.github/workflows/ci.yml` — pipeline GitHub Actions sur les push et pull requests de `main` et des branches `arena/**`, avec `npm ci`, `npm test` et `npm run build`.
+- **Commit workflow :** `288b8c43089a83c24afcc31f03a0e2ddecf5a3b4`.
+- **État d'exécution :** aucune exécution GitHub Actions visible au moment de cette vérification ; les tests et le build ne sont donc toujours pas déclarés réussis. Il faudra vérifier si le mode de commit déclenche les workflows, puis exécuter manuellement ou via un push autorisé si nécessaire.
+- **Suite immédiate :** poursuivre les améliorations P3-02 et vérifier le pipeline avant d'ouvrir P3-03. Ne pas modifier `main` et ne pas déclarer P3-02 terminé avant les vérifications requises.
+
+---
+
 ### 2026-10-18 — P3-02 — Première implémentation — Assistant ChatGPT
 
 - **État :** Première passe déposée sur la branche ; vérifications de compilation/tests à effectuer avant l'audit indépendant. Ne pas clôturer P3-02 à ce stade.

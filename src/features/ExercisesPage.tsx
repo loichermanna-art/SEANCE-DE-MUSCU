@@ -3,6 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { Library, Search } from 'lucide-react'
 import { db } from '../services/db'
 import { Card, EmptyState, PageTitle, PhaseBadge } from '../components/ui'
+import ExerciseDemoPlayer from './ExerciseDemoPlayer'
 
 const EQUIPMENT_LABELS: Record<string, string> = {
   barre: 'Barre', halteres: 'Haltères', machine: 'Machine', poulie: 'Poulie', poids_du_corps: 'Poids du corps',
@@ -15,12 +16,13 @@ export default function ExercisesPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
   const data = useLiveQuery(async () => {
-    const [exercises, groups, links] = await Promise.all([
+    const [exercises, groups, links, demonstrations] = await Promise.all([
       db.exercises.orderBy('name').toArray(),
       db.muscleGroups.toArray(),
       db.exerciseMuscles.toArray(),
+      db.exerciseDemonstrations.where('status').equals('publiee').toArray(),
     ])
-    return { exercises, groups, links }
+    return { exercises, groups, links, demonstrations }
   }, [])
 
   const musclesOf = useMemo(() => {
@@ -102,7 +104,11 @@ export default function ExercisesPage() {
       )}
 
       {selected ? (
-        <Card className="gym-panel-enter mt-5">
+        <div className="gym-panel-enter mt-5 space-y-4">
+          {data?.demonstrations.find((demo) => demo.exerciseId === selected.id) ? (
+            <ExerciseDemoPlayer demonstration={data.demonstrations.find((demo) => demo.exerciseId === selected.id)!} />
+          ) : null}
+          <Card>
           <h2 className="text-lg font-bold">{selected.name}</h2>
           <p className="mt-1 text-sm text-muted">{selected.description}</p>
           <h3 className="mt-4 text-sm font-bold uppercase tracking-wide text-muted">Consignes d’exécution</h3>
@@ -114,7 +120,8 @@ export default function ExercisesPage() {
             </>
           ) : null}
           <p className="mt-4 text-xs text-muted">L’historique de tes performances sur cet exercice apparaîtra ici après tes premières séances (Phase 5).</p>
-        </Card>
+          </Card>
+        </div>
       ) : null}
     </div>
   )

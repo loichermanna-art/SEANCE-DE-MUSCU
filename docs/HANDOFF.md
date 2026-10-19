@@ -9,8 +9,9 @@
   - Migration Supabase additive `20261019130000_exercise_demonstration_metadata_alignment.sql`, schéma miroir et spécification clarifiés; migration Dexie v1→v2 maintenant exercée par un test de migration.
 - **Tests ajoutés :** tests de rendu/commandes du lecteur (lecture, pause, fin, rejeu, vitesse, sélection d’étape, changement de préférence, visibilité, planche statique et géométrie d’articulations), tests de rafraîchissement du seed et migration Dexie.
 - **Vérifications locales exactes :** `npm ci && npm test && npm run build && git diff --check` — réussi sur le code avant commit. 6 fichiers de tests, 38 tests réussis. Build TypeScript/Vite/PWA réussi; chunk JS de 733,57 kB (>500 kB). `npm ci` signale 3 vulnérabilités (1 modérée, 2 critiques) et une dépréciation `glob`; aucun correctif automatique appliqué.
+- **CI après publication :** run `39271000512` réussi sur le commit de passation `a48a858` (qui contient `aa837bb`), avec installation, tests et build réussis. Annotations informatives : actions Node 20 en migration vers Node 24 et runner `ubuntu-latest` appelé à évoluer.
 - **Limites restantes :** le SQL n’a pas été appliqué à un projet Supabase; aucun contrôle navigateur visuel réel, clavier/tactile, téléphone/ordinateur ou lecteur d’écran n’a été fait par l’implémenteur. Les scènes restent stylisées : la fidélité finale des 14 mouvements doit être revue à nouveau par l’auditeur indépendant; ne pas marquer DEMO-01 acceptée sur la seule base des tests.
-- **Prochaine action :** publier ce commit sur la branche, vérifier sa CI, puis demander à l’auditeur indépendant une relecture ciblée des 14 scènes et la matrice navigateur/accessibilité. DEMO-01 reste **En cours** jusqu’à cette revalidation.
+- **Prochaine action :** demander à l’auditeur indépendant une relecture ciblée des 14 scènes et la matrice navigateur/accessibilité. DEMO-01 reste **En cours** jusqu’à cette revalidation.
 
 ---
 

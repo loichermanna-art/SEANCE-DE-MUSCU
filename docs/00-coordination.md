@@ -17,7 +17,7 @@ Le projet utilise React, TypeScript et Vite. Les données locales sont gérées 
 - La bibliothèque d'exercices et les tables de données des programmes existent déjà. La création et la gestion complète des programmes restent à réaliser.
 - La séance en direct (Phase 4) est le prochain grand jalon après les programmes.
 
-Voir [`05-roadmap.md`](05-roadmap.md) pour la roadmap détaillée et les critères de fin.
+Voir [`05-roadmap.md`](05-roadmap.md) pour la roadmap détaillée et les critères de fin. Le chantier **DEMO-01** est prioritaire sur P3-02 jusqu’à décision contraire ; P3-02 est explicitement en pause.
 
 ## Tâches
 
@@ -27,8 +27,9 @@ Les tâches marquées « À attribuer » ne sont prises par aucun assistant tant
 |---|---|---|---|---|
 | UI-01 | Déployer progressivement le thème clair premium et harmoniser les composants/navigation sans régression | En cours | Assistant ChatGPT (mandat explicite de l'utilisateur) | — |
 | P3-01 | Examiner l'existant lié aux programmes et proposer un découpage précis, sans modifier le code fonctionnel | Terminé | Assistant ChatGPT | — |
-| P3-02 | Implémenter la création, modification et suppression des programmes et de leurs jours | En cours | Assistant ChatGPT (validation explicite utilisateur) | P3-01 |
+| P3-02 | Implémenter la création, modification et suppression des programmes et de leurs jours | **En pause** | Assistant ChatGPT (pause demandée par l’utilisateur le 2026-10-19) | P3-01 |
 | P3-03 | Permettre d'ajouter/réordonner des exercices dans les jours, avec séries, répétitions, charge cible et repos | À faire | À attribuer | P3-02 |
+| DEMO-01 | Démonstrations d’exercices en séquences animées codées (motion design) | Spécification à valider | Assistant ChatGPT — conception/audit | — |
 | P3-04 | Relier l'interface de programme aux vraies données locales, gérer les états vide/erreur/succès et ajouter des tests | À faire | À attribuer | P3-02, P3-03 |
 | P4-01 | Commencer la séance en direct à partir d'un jour de programme | À faire | À attribuer | Phase 3 terminée |
 

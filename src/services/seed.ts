@@ -5,6 +5,7 @@
 
 import { db } from './db'
 import type { Exercise, ExerciseMuscle, MuscleGroup } from '../domain/types'
+import { buildDemonstrationRows } from '../domain/exerciseDemonstrations'
 
 export const MUSCLE_GROUPS: MuscleGroup[] = [
   { id: 'pectoraux', name: 'Pectoraux' },
@@ -56,7 +57,10 @@ export const SEED_EXERCISES: SeedExercise[] = [
 /** Insère les données de référence si la base est vide. Idempotent (§15.4). */
 export async function seedIfEmpty(): Promise<void> {
   const exerciseCount = await db.exercises.count()
-  if (exerciseCount > 0) return
+  if (exerciseCount > 0) {
+    await seedExerciseDemonstrations()
+    return
+  }
   const now = new Date().toISOString()
   await db.transaction('rw', [db.muscleGroups, db.exercises, db.exerciseMuscles], async () => {
     await db.muscleGroups.bulkPut(MUSCLE_GROUPS)
@@ -76,4 +80,14 @@ export async function seedIfEmpty(): Promise<void> {
     )
     await db.exerciseMuscles.bulkPut(links)
   })
+  await seedExerciseDemonstrations()
+}
+
+/** Publie les démonstrations de référence sans écraser les variantes locales existantes. */
+export async function seedExerciseDemonstrations(): Promise<void> {
+  const rows = buildDemonstrationRows()
+  for (const row of rows) {
+    const existing = await db.exerciseDemonstrations.get(row.id)
+    if (!existing) await db.exerciseDemonstrations.put(row)
+  }
 }

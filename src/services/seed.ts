@@ -83,11 +83,19 @@ export async function seedIfEmpty(): Promise<void> {
   await seedExerciseDemonstrations()
 }
 
-/** Publie les démonstrations de référence sans écraser les variantes locales existantes. */
+/** Insère les références et applique les mises à jour de composition sans toucher aux variantes personnalisées. */
 export async function seedExerciseDemonstrations(): Promise<void> {
   const rows = buildDemonstrationRows()
-  for (const row of rows) {
-    const existing = await db.exerciseDemonstrations.get(row.id)
-    if (!existing) await db.exerciseDemonstrations.put(row)
-  }
+  await db.transaction('rw', db.exerciseDemonstrations, async () => {
+    for (const row of rows) {
+      const existing = await db.exerciseDemonstrations.get(row.id)
+      if (!existing) {
+        await db.exerciseDemonstrations.put(row)
+      } else if (existing.variantKey === 'default' && existing.animationVersion < row.animationVersion) {
+        // The renderer and its stage geometry changed. Refresh the stable built-in row,
+        // but preserve whether the row was intentionally left unpublished locally.
+        await db.exerciseDemonstrations.put({ ...row, status: existing.status })
+      }
+    }
+  })
 }

@@ -76,7 +76,7 @@ export interface ExerciseDemonstration {
   animationKey: string
   animationVersion: number
   durationMs: number
-  view: 'side' | 'front' | 'three-quarter'
+  view: 'side' | 'front' | 'three_quarter' | 'static'
   accessibilityLabel: string
   status: DemonstrationStatus
   updatedAt: string

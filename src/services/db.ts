@@ -28,8 +28,8 @@ export class GymOSDatabase extends Dexie {
   bodyMeasurements!: Table<BodyMeasurement, string>
   userPreferences!: Table<UserPreferences, string>
 
-  constructor() {
-    super('gym-os')
+  constructor(databaseName = 'gym-os') {
+    super(databaseName)
     this.version(1).stores({
       profiles: 'id, updatedAt',
       goals: 'id, userId, status',

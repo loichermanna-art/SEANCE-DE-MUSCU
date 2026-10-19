@@ -45,13 +45,17 @@ create table if not exists public.exercise_demonstrations (
   exercise_id text not null references public.exercises(id) on delete cascade,
   variant_key text not null default 'default',
   animation_key text not null,
-  animation_version integer not null default 1 check (animation_version > 0),
-  duration_ms integer not null default 3200 check (duration_ms >= 0),
-  view text not null default 'side' check (view in ('side', 'front', 'three-quarter')),
+  animation_version integer not null default 2 check (animation_version > 0),
+  duration_ms integer not null default 6000,
+  view text not null default 'side' check (view in ('side', 'front', 'three_quarter', 'static')),
   accessibility_label text not null,
   status text not null default 'brouillon' check (status in ('publiee', 'brouillon')),
   updated_at timestamptz not null default now(),
-  unique (exercise_id, variant_key)
+  unique (exercise_id, variant_key),
+  constraint exercise_demonstrations_duration_ms_check check (
+    (view = 'static' and duration_ms = 0)
+    or (view <> 'static' and duration_ms between 1000 and 12000)
+  )
 );
 
 create table if not exists public.profiles (

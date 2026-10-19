@@ -48,8 +48,8 @@ Proposition d’une table de métadonnées distincte. Les images/animations vect
 | `variantKey` | `variant_key` | `text`, clé stable de variante, ex. `default` ou `side` |
 | `animationKey` | `animation_key` | `text`, identifiant d’un composant/animation enregistré dans le code |
 | `animationVersion` | `animation_version` | entier positif, version de la composition |
-| `durationMs` | `duration_ms` | entier entre 1 000 et 12 000 ms |
-| `view` | `view` | `text`, parmi `side`, `front`, `three_quarter`, `static` |
+| `durationMs` | `duration_ms` | `0` uniquement pour une démonstration statique; sinon entier entre 1 000 et 12 000 ms |
+| `view` | `view` | `text`, parmi `side`, `front`, `three_quarter`, `static`; `static` est réservé à une pose sans lecture animée |
 | `accessibilityLabel` | `accessibility_label` | `text` non vide, résumé textuel du mouvement représenté |
 | `status` | `status` | `text`, `publiee` ou `brouillon` |
 | `updatedAt` | `updated_at` | date ISO en local / `timestamptz` en SQL |

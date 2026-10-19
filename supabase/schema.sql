@@ -39,6 +39,21 @@ create table if not exists public.exercise_muscles (
   role text not null check (role in ('principal', 'secondaire'))
 );
 
+
+create table if not exists public.exercise_demonstrations (
+  id text primary key,
+  exercise_id text not null references public.exercises(id) on delete cascade,
+  variant_key text not null default 'default',
+  animation_key text not null,
+  animation_version integer not null default 1 check (animation_version > 0),
+  duration_ms integer not null default 3200 check (duration_ms >= 0),
+  view text not null default 'side' check (view in ('side', 'front', 'three-quarter')),
+  accessibility_label text not null,
+  status text not null default 'brouillon' check (status in ('publiee', 'brouillon')),
+  updated_at timestamptz not null default now(),
+  unique (exercise_id, variant_key)
+);
+
 create table if not exists public.profiles (
   id uuid primary key default gen_random_uuid(),
   display_name text not null,
@@ -177,6 +192,7 @@ create table if not exists public.user_preferences (
   theme text not null default 'sombre'
 );
 
+create index if not exists idx_exercise_demonstrations_exercise_status on public.exercise_demonstrations(exercise_id, status);
 create index if not exists idx_workout_sessions_user_status on public.workout_sessions(user_id, status);
 create index if not exists idx_workout_sets_exercise on public.workout_sets(workout_exercise_id, status);
 create index if not exists idx_program_days_program on public.program_days(program_id, day_order);
@@ -188,6 +204,7 @@ create index if not exists idx_body_measurements_user on public.body_measurement
 alter table public.muscle_groups enable row level security;
 alter table public.exercises enable row level security;
 alter table public.exercise_muscles enable row level security;
+alter table public.exercise_demonstrations enable row level security;
 alter table public.profiles enable row level security;
 alter table public.goals enable row level security;
 alter table public.programs enable row level security;
@@ -205,7 +222,7 @@ alter table public.user_preferences enable row level security;
 do $$
 declare t text;
 begin
-  foreach t in array array['muscle_groups','exercises','exercise_muscles','profiles','goals','programs','program_days','program_exercises','workout_sessions','workout_exercises','workout_sets','recovery_checkins','muscle_soreness','body_measurements','user_preferences']
+  foreach t in array array['muscle_groups','exercises','exercise_muscles','exercise_demonstrations','profiles','goals','programs','program_days','program_exercises','workout_sessions','workout_exercises','workout_sets','recovery_checkins','muscle_soreness','body_measurements','user_preferences']
   loop
     execute format('drop policy if exists "personal_anon_access" on public.%I', t);
     execute format('create policy "personal_anon_access" on public.%I for all to anon using (true) with check (true)', t);

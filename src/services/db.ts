@@ -7,13 +7,14 @@ import Dexie, { type Table } from 'dexie'
 import type {
   Profile, Goal, Exercise, MuscleGroup, ExerciseMuscle, Program, ProgramDay,
   ProgramExercise, WorkoutSession, WorkoutExercise, WorkoutSet, RecoveryCheckin,
-  MuscleSoreness, BodyMeasurement, UserPreferences,
+  MuscleSoreness, BodyMeasurement, UserPreferences, ExerciseDemonstration,
 } from '../domain/types'
 
 export class GymOSDatabase extends Dexie {
   profiles!: Table<Profile, string>
   goals!: Table<Goal, string>
   exercises!: Table<Exercise, string>
+  exerciseDemonstrations!: Table<ExerciseDemonstration, string>
   muscleGroups!: Table<MuscleGroup, string>
   exerciseMuscles!: Table<ExerciseMuscle, string>
   programs!: Table<Program, string>
@@ -33,6 +34,24 @@ export class GymOSDatabase extends Dexie {
       profiles: 'id, updatedAt',
       goals: 'id, userId, status',
       exercises: 'id, name, isCustom',
+      muscleGroups: 'id, name',
+      exerciseMuscles: 'id, exerciseId, muscleGroupId',
+      programs: 'id, userId, status, updatedAt',
+      programDays: 'id, programId, dayOrder',
+      programExercises: 'id, programDayId, exerciseId, exerciseOrder',
+      workoutSessions: 'id, userId, status, startedAt, programDayId',
+      workoutExercises: 'id, workoutSessionId, exerciseId, exerciseOrder',
+      workoutSets: 'id, workoutExerciseId, status',
+      recoveryCheckins: 'id, userId, recordedAt',
+      muscleSoreness: 'id, recoveryCheckinId, muscleGroupId',
+      bodyMeasurements: 'id, userId, measurementType, measuredAt',
+      userPreferences: 'id, userId',
+    })
+    this.version(2).stores({
+      profiles: 'id, updatedAt',
+      goals: 'id, userId, status',
+      exercises: 'id, name, isCustom',
+      exerciseDemonstrations: 'id, exerciseId, status, updatedAt, [exerciseId+variantKey]',
       muscleGroups: 'id, name',
       exerciseMuscles: 'id, exerciseId, muscleGroupId',
       programs: 'id, userId, status, updatedAt',

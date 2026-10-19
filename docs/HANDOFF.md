@@ -1,3 +1,16 @@
+### 2026-10-19 — DEMO-01 — Implémentation initiale
+
+- **Mandat :** validation finale explicite reçue le 2026-10-19. Modèle en table, 14 exercices, lecteur dans la bibliothèque seulement, contrôles complets, mouvement réduit statique, animations originales sans ressources externes. P3-02 reste en pause.
+- **Branche :** `arena/aa006b12-seance-de-muscu`. Aucun changement volontaire sur `main`.
+- **Spécification validée :** [`docs/specification-demonstrations-exercices-motion.md`](https://github.com/loichermanna-art/SEANCE-DE-MUSCU/blob/arena/aa006b12-seance-de-muscu/docs/specification-demonstrations-exercices-motion.md).
+- **Implémentation ajoutée :** modèle `ExerciseDemonstration`, catalogue fermé de 14 clés d’animation originales, seed idempotent, migration Dexie v1→v2, lecteur SVG à étapes dans les fiches de bibliothèque, contrôles lecture/pause/rejouer/vitesse/étapes, respect de `prefers-reduced-motion`, arrêt lorsque la page est masquée, migration SQL additive et miroir du schéma Supabase.
+- **Tests ajoutés :** `src/domain/exerciseDemonstrations.test.ts` vérifie les 14 entrées, l’unicité et les clés d’animation autorisées.
+- **Fichiers applicatifs/documentaires :** `src/domain/types.ts`, `src/domain/exerciseDemonstrations.ts`, `src/domain/exerciseDemonstrations.test.ts`, `src/services/db.ts`, `src/services/seed.ts`, `src/features/ExerciseDemoPlayer.tsx`, `src/features/ExercisesPage.tsx`, `supabase/schema.sql`, `supabase/migrations/20261019120000_exercise_demonstrations.sql`, `docs/03-modele-de-donnees.md`, ce journal et `docs/00-coordination.md`.
+- **Vérifications :** non exécutées à ce stade. Une tentative de clone local a échoué car l’environnement ne résout pas `github.com`; ne pas déclarer `npm test` ni `npm run build` réussis avant résultat CI ou exécution réelle.
+- **Prochaine action :** vérifier statiquement les fichiers et le statut CI du commit final ; corriger tout échec. L’audit indépendant reste requis. P3-02 reste en pause et `main` ne doit pas être modifiée.
+
+---
+
 ### 2026-10-19 — DEMO-01 — Spécification des démonstrations animées
 
 - **État :** spécification déposée, validation utilisateur attendue. Aucun code fonctionnel modifié pour DEMO-01.

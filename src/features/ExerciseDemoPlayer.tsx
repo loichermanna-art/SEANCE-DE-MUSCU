@@ -69,16 +69,18 @@ export default function ExerciseDemoPlayer({ demonstration }: { demonstration: E
   useEffect(() => {
     if (!playing || reducedMotion || !allowed || demonstration.animationKey === 'plank') return
     const interval = window.setInterval(() => {
-      setStage((current) => {
-        if (current >= 2) {
-          setPlaying(false)
-          return 2
-        }
-        return (current + 1) as Stage
-      })
+      if (stage >= 2) {
+        setPlaying(false)
+        return
+      }
+      setStage((stage + 1) as Stage)
     }, 1050 / speed)
     return () => window.clearInterval(interval)
-  }, [playing, reducedMotion, allowed, speed, demonstration.animationKey])
+  }, [playing, reducedMotion, allowed, speed, stage, demonstration.animationKey])
+
+  useEffect(() => {
+    if (reducedMotion) setPlaying(false)
+  }, [reducedMotion])
 
   useEffect(() => {
     const stop = () => setPlaying(false)
